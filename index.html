@@ -38,7 +38,6 @@
       object-fit: contain;
       image-rendering: auto;
     }
-    /* Vinheta via CSS (custo zero de CPU no loop do canvas) */
     #vignette-overlay {
       position: absolute;
       inset: 0;
@@ -113,7 +112,7 @@
       .hud-btn { padding: 7px 12px; font-size: 13px; }
     }
 
-    /* MODAIS (QUIZ, MENU, CRÉDITOS) */
+    /* MODAIS (QUIZ, CORAÇÃO, MENU, CRÉDITOS) */
     .modal-overlay {
       position: absolute;
       inset: 0;
@@ -243,32 +242,6 @@
       color: #dfe6e9;
     }
 
-    /* TOAST DE CARINHO */
-    #heart-toast {
-      position: absolute;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(70px);
-      background: linear-gradient(135deg, #ff4757, #ba1138);
-      border: 3px solid #ffffff;
-      color: #fff;
-      padding: 18px 32px;
-      border-radius: 40px;
-      font-size: 18px;
-      font-weight: 700;
-      text-align: center;
-      max-width: 86%;
-      box-shadow: 0 12px 40px rgba(255, 71, 87, 0.65);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 40;
-    }
-    #heart-toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
     /* INDICADOR DE PORTAL */
     #portal-hint {
       position: absolute;
@@ -288,7 +261,7 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.6);
     }
 
-    /* CONTROLES MOBILE (sem backdrop-filter para não travar no celular) */
+    /* CONTROLES MOBILE */
     #mobile-controls {
       position: absolute;
       inset: 0;
@@ -373,7 +346,6 @@
 <body>
 
 <div id="game-container">
-  <!-- Coordenadas lógicas 1920x1080; resolução física gerenciada por RENDER_SCALE (720p padrão para 60 FPS liso) -->
   <canvas id="gameCanvas" width="1280" height="720"></canvas>
   <div id="vignette-overlay"></div>
 
@@ -407,12 +379,6 @@
   <!-- Dica de Direção do Portal -->
   <div id="portal-hint">✨ Portal aberto! Siga até o Portal Mágico!</div>
 
-  <!-- Toast Carinho -->
-  <div id="heart-toast">
-    <div style="font-size:14px; opacity:0.9; margin-bottom:4px;">❤️ Mensagem da Turma do 6º B:</div>
-    <div id="toast-body">"Professora Dilma, seu carinho ilumina nossa sala!"</div>
-  </div>
-
   <!-- Modal Interativo de Geografia -->
   <div class="modal-overlay" id="quiz-modal">
     <div class="modal-box">
@@ -420,6 +386,19 @@
       <div class="modal-text" id="quiz-question">Carregando pergunta...</div>
       <div class="options-grid" id="quiz-options"></div>
       <div id="quiz-feedback" style="font-size:17px; font-weight:bold; min-height:24px;"></div>
+    </div>
+  </div>
+
+  <!-- Modal Carinho (Pausa o jogo para ler a mensagem do coração) -->
+  <div class="modal-overlay" id="heart-modal">
+    <div class="modal-box" style="max-width:580px; border-color:#ff6b81; box-shadow:0 20px 50px rgba(0,0,0,0.95), 0 0 40px rgba(255,107,129,0.4);">
+      <div class="modal-title" style="color:#ff6b81;">❤️ MENSAGEM DA TURMA DO 6º B</div>
+      <div class="modal-text" id="heart-modal-body" style="font-size:22px; line-height:1.6; color:#fff;">
+        "Professora Dilma, seu carinho ilumina nossa sala!"
+      </div>
+      <button class="menu-action-btn primary" id="btn-close-heart" style="width:100%; background:linear-gradient(45deg, #ff6b81, #ff4757); color:#fff; border-color:#ffb8c1;">
+        💛 Continuar Aventura
+      </button>
     </div>
   </div>
 
@@ -449,7 +428,7 @@
         <div style="color:#ffd152; font-weight:700; font-size:18px; margin-bottom:6px;">
           💛 Homenagem Especial à Professora Dilma
         </div>
-        Este jogo foi criado com todo carinho pela <b>Turma do 6º B</b> como forma de agradecer por cada aula de Geografia, cada ensinamento, cada conselho e por tornar nossos dias na escola inesquecíveis.
+        Este jogo foi criado com todo carinho pela <b>Turma do 6º B</b> como forma de agradecer por cada aula de Geografia, cada ensinamento, cada conselho e por tornar nossos dias na escola ainda mais especiais e alegres!
       </div>
       <div class="credits-card">
         <div style="color:#70a1ff; font-weight:700; margin-bottom:6px;">🎮 Controles da Jornada</div>
@@ -497,10 +476,10 @@
   <div class="screen-overlay" id="victory-screen" style="display:none;">
     <h1 style="font-size:42px; color:#ffd152; margin-bottom:16px;">🎉 VITÓRIA LENDÁRIA! 🎉</h1>
     <h2 style="font-size:26px; color:#ff7675; max-width:700px; line-height:1.45; margin-bottom:16px;">
-      "Professora Dilma, a gente nunca vai esquecer de você."
+      "Professora Dilma, você é a melhor! Obrigado por estar sempre com a gente!"
     </h2>
     <p style="font-size:19px; color:#dfe6e9; max-width:640px; line-height:1.55; margin-bottom:16px;">
-      Obrigado por cada ensinamento, cada conselho e cada momento. Esta aventura foi feita com muito carinho para você!
+      Obrigado por cada aula incrível, cada ensinamento, cada conselho e por tornar nossos dias na escola muito mais alegres. Esta aventura foi feita com todo carinho para você!
     </p>
     <div style="font-family:'Press Start 2P', monospace; font-size:14px; color:#ffd152; margin-bottom:22px; letter-spacing:1px;">
       UMA HOMENAGEM DA TURMA DO 6º B.
@@ -515,16 +494,9 @@
 </div>
 
 <script>
-/**
- * DILMA QUEST — EDIÇÃO PROCEDURAL & ALTA PERFORMANCE
- * - Parkour 100% procedural e imprevisível (muda a cada fase, morte, reinício ou nova jornada)
- * - Validação física automática para que todos os saltos sejam sempre alcançáveis
- * - Renderização otimizada com camadas recortadas, cache de céu/raios, culling e passo fixo de 60Hz (sem câmera lenta)
- */
-
 const LOGICAL_W = 1920;
 const LOGICAL_H = 1080;
-let RENDER_SCALE = 2 / 3; // Padrão 1280x720 (rápido e liso; alternável para 1080p no Menu)
+let RENDER_SCALE = 2 / 3;
 
 // ==========================================
 // 1. ÁUDIO SINTETIZADO (Web Audio)
@@ -671,17 +643,19 @@ class SoundFX {
 const sfx = new SoundFX();
 
 // ==========================================
-// 2. BANCO DE GEOGRAFIA RICO (6º ANO)
+// 2. BANCO DE GEOGRAFIA (45 PERGUNTAS SEM REPETIR)
 // ==========================================
 class GeographyQuestionBank {
   constructor() {
     this.questions = [
       { q: "Qual forma de relevo é caracterizada por áreas planas e elevadas em relação às terras vizinhas?", a: "Planalto", err: ["Planície", "Depressão Absoluta", "Cordilheira"] },
       { q: "Qual linha imaginária divide a Terra nos Hemisférios Ocidental e Oriental?", a: "Meridiano de Greenwich", err: ["Linha do Equador", "Trópico de Câncer", "Círculo Polar Ártico"] },
+      { q: "Qual linha imaginária divide a Terra em Hemisfério Norte e Hemisfério Sul?", a: "Linha do Equador", err: ["Meridiano de Greenwich", "Trópico de Capricórnio", "Círculo Polar Antártico"] },
       { q: "Qual é o maior oceano do planeta em área e profundidade?", a: "Oceano Pacífico", err: ["Oceano Atlântico", "Oceano Índico", "Oceano Glacial Ártico"] },
       { q: "Qual bioma exclusivamente brasileiro tem clima semiárido e cactos como o mandacaru?", a: "Caatinga", err: ["Pampa", "Mata de Araucárias", "Floresta Amazônica"] },
       { q: "Em qual cordilheira da América do Sul fica a nascente do rio Amazonas?", a: "Cordilheira dos Andes", err: ["Montanhas Rochosas", "Montes Urais", "Cordilheira do Himalaia"] },
       { q: "O movimento de rotação da Terra ao redor do seu próprio eixo resulta em:", a: "Sucessão dos dias e das noites", err: ["Estações do ano", "Eclipses solares", "Fases da Lua"] },
+      { q: "Qual movimento a Terra realiza ao redor do Sol, durando cerca de 365 dias e gerando as estações do ano?", a: "Translação", err: ["Rotação", "Precessão", "Erupção"] },
       { q: "Em qual camada da atmosfera acontecem os fenômenos do clima, como chuvas e ventos?", a: "Troposfera", err: ["Estratosfera", "Mesosfera", "Termosfera"] },
       { q: "As linhas imaginárias horizontais paralelas ao Equador são chamadas de:", a: "Paralelos (Latitudes)", err: ["Meridianos (Longitudes)", "Zênites", "Isóbaras"] },
       { q: "Qual é o maior rio em volume de água de todo o planeta Terra?", a: "Rio Amazonas", err: ["Rio Nilo", "Rio Mississipi", "Rio Yangtzé"] },
@@ -690,16 +664,76 @@ class GeographyQuestionBank {
       { q: "Qual é o menor continente do mundo em área territorial?", a: "Oceania", err: ["Europa", "América do Sul", "Antártida"] },
       { q: "Em um mapa, o que a escala cartográfica nos informa?", a: "A proporção entre o mapa e a realidade", err: ["A direção do norte magnético", "A altitude do terreno", "A data de criação"] },
       { q: "Qual bioma de clima frio polar é coberto principalmente por musgos e líquens?", a: "Tundra", err: ["Floresta Tropical", "Savana", "Estepe"] },
-      { q: "Qual reservatório subterrâneo gigante estende-se pelo Brasil, Argentina, Paraguai e Uruguai?", a: "Aquífero Guarani", err: ["Aquífero Alter do Chão", "Aquífero Nubiano", "Bacia do Paraná"] }
+      { q: "Qual reservatório subterrâneo gigante estende-se pelo Brasil, Argentina, Paraguai e Uruguai?", a: "Aquífero Guarani", err: ["Aquífero Alter do Chão", "Aquífero Nubiano", "Bacia do Paraná"] },
+      { q: "Qual instrumento de orientação indica o Norte magnético através de uma agulha imantada?", a: "Bússola", err: ["Termômetro", "Barômetro", "Pluviômetro"] },
+      { q: "Na Rosa dos Ventos, quais são os quatro pontos cardeais?", a: "Norte, Sul, Leste e Oeste", err: ["Nordeste, Sudeste, Noroeste e Sudoeste", "Cima, Baixo, Direita e Esquerda", "Sol, Lua, Terra e Mar"] },
+      { q: "Tomando o Sol como referência pela manhã, em qual ponto cardeal ele nasce?", a: "Leste (Oriente)", err: ["Oeste (Ocidente)", "Norte", "Sul"] },
+      { q: "Em um mapa, qual elemento explica o significado dos símbolos, cores e linhas usados?", a: "Legenda", err: ["Título", "Escala", "Rosa dos Ventos"] },
+      { q: "Qual é a camada mais externa e sólida do planeta Terra, onde vivemos?", a: "Crosta terrestre", err: ["Manto", "Núcleo interno", "Núcleo externo"] },
+      { q: "Qual camada interna da Terra fica entre a crosta e o núcleo e contém magma?", a: "Manto", err: ["Atmosfera", "Hidrosfera", "Crosta oceânica"] },
+      { q: "Qual é a camada mais interna e mais quente da Terra, rica em ferro e níquel?", a: "Núcleo", err: ["Troposfera", "Litosfera", "Estratosfera"] },
+      { q: "Qual é a diferença entre tempo atmosférico e clima?", a: "O tempo muda a cada dia; o clima é o padrão observado por muitos anos", err: ["Tempo e clima são exatamente a mesma coisa", "O clima muda de hora em hora e o tempo nunca muda", "O tempo só existe no verão"] },
+      { q: "Qual bioma brasileiro é a maior planície alagável do planeta?", a: "Pantanal", err: ["Caatinga", "Pampa", "Cerrado"] },
+      { q: "Qual bioma brasileiro predominava originalmente no litoral do Brasil, mas foi muito reduzido?", a: "Mata Atlântica", err: ["Tundra", "Deserto", "Taiga"] },
+      { q: "Qual bioma brasileiro é formado por campos naturais no extremo sul do país (Rio Grande do Sul)?", a: "Pampa", err: ["Caatinga", "Floresta Amazônica", "Pantanal"] },
+      { q: "Qual é o maior deserto quente do mundo, localizado no norte da África?", a: "Deserto do Saara", err: ["Deserto do Atacama", "Deserto de Gobi", "Caatinga"] },
+      { q: "Qual famoso rio africano atravessa o Egito e foi essencial para a civilização antiga?", a: "Rio Nilo", err: ["Rio São Francisco", "Rio Paraná", "Rio Reno"] },
+      { q: "No ciclo da água, a passagem da água líquida dos rios e oceanos para vapor se chama:", a: "Evaporação", err: ["Precipitação", "Infiltração", "Solidificação"] },
+      { q: "No ciclo da água, o retorno da água das nuvens para a superfície na forma de chuva é:", a: "Precipitação", err: ["Evaporação", "Transpiração", "Sublimação"] },
+      { q: "Como se chama o desgaste e o transporte do solo pela ação da chuva, dos rios ou do vento?", a: "Erosão", err: ["Fotossíntese", "Rotação", "Urbanização"] },
+      { q: "Uma paisagem formada apenas por elementos da natureza, sem interferência humana, é uma:", a: "Paisagem natural", err: ["Paisagem cultural", "Paisagem urbana", "Paisagem industrial"] },
+      { q: "Uma paisagem modificada pelo trabalho humano (com prédios, estradas e pontes) é uma:", a: "Paisagem cultural (ou humanizada)", err: ["Paisagem virgem", "Paisagem abissal", "Paisagem lunar"] },
+      { q: "Quais dos exemplos abaixo são recursos naturais renováveis?", a: "Luz solar, vento e água", err: ["Petróleo, carvão mineral e gás natural", "Ouro, ferro e diamante", "Urânio e carvão"] },
+      { q: "Qual recurso energético é um combustível fóssil não renovável muito usado para fazer gasolina?", a: "Petróleo", err: ["Energia solar", "Energia eólica", "Energia das marés"] },
+      { q: "Qual setor da economia envolve a agricultura, a pecuária e o extrativismo?", a: "Setor Primário", err: ["Setor Secundário", "Setor Terciário", "Setor Digital"] },
+      { q: "Qual setor da economia transforma matérias-primas em produtos na indústria?", a: "Setor Secundário", err: ["Setor Primário", "Setor Terciário", "Setor Agrícola"] },
+      { q: "Qual setor da economia abrange o comércio, escolas, hospitais e prestação de serviços?", a: "Setor Terciário", err: ["Setor Primário", "Setor Secundário", "Setor Extrativista"] },
+      { q: "Como é chamado o deslocamento de pessoas que saem do campo para morar nas cidades?", a: "Êxodo rural", err: ["Êxodo urbano", "Rotação", "Sedentarismo"] },
+      { q: "O processo de crescimento das cidades e aumento da população urbana é chamado de:", a: "Urbanização", err: ["Desertificação", "Glaciação", "Reflorestamento"] },
+      { q: "Em qual subcontinente das Américas o Brasil está localizado?", a: "América do Sul", err: ["América do Norte", "América Central", "Europa Ocidental"] },
+      { q: "Qual oceano banha todo o litoral leste do Brasil?", a: "Oceano Atlântico", err: ["Oceano Pacífico", "Oceano Índico", "Oceano Ártico"] },
+      { q: "Qual é o nome do conjunto de todas as águas do planeta (oceanos, rios, lagos e geleiras)?", a: "Hidrosfera", err: ["Atmosfera", "Litosfera", "Biosfera"] }
     ];
+    this.deck = [];
+    this.refillDeck();
   }
+
+  refillDeck(excludeIndices = new Set()) {
+    const indices = [];
+    for (let i = 0; i < this.questions.length; i++) {
+      if (!excludeIndices.has(i)) indices.push(i);
+    }
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    this.deck.push(...indices);
+  }
+
   getFiveQuestions() {
-    return [...this.questions].sort(() => 0.5 - Math.random()).slice(0, 5).map((item, idx) => ({
-      id: `geo_${idx}_${Date.now()}`,
-      question: item.q,
-      answer: item.a,
-      options: [...item.err, item.a].sort(() => 0.5 - Math.random())
-    }));
+    const chosenIndices = [];
+    const chosenSet = new Set();
+
+    while (chosenIndices.length < 5) {
+      if (this.deck.length === 0) {
+        this.refillDeck(chosenSet);
+      }
+      const idx = this.deck.shift();
+      if (!chosenSet.has(idx)) {
+        chosenSet.add(idx);
+        chosenIndices.push(idx);
+      }
+    }
+
+    return chosenIndices.map((qIdx, idx) => {
+      const item = this.questions[qIdx];
+      return {
+        id: `geo_${idx}_${Date.now()}_${Math.random()}`,
+        question: item.q,
+        answer: item.a,
+        options: [...item.err, item.a].sort(() => 0.5 - Math.random())
+      };
+    });
   }
 }
 
@@ -713,32 +747,29 @@ class HeartMessageBank {
       "Com todo carinho e gratidão:"
     ];
     this.meios = [
-      "suas aulas abriram nossos horizontes para o mundo",
-      "sua dedicação e paciência transformaram o nosso ano letivo",
-      "cada mapa estudado ganhou vida com o seu amor por ensinar",
-      "seus ensinamentos e conselhos vão nos acompanhar para sempre",
-      "sua alegria contagiante tornava até os dias difíceis mais leves"
+      "suas aulas abrem nossos horizontes para o mundo",
+      "sua dedicação e paciência tornam o nosso ano letivo incrível",
+      "cada mapa estudado ganha vida com o seu amor por ensinar",
+      "seus ensinamentos e conselhos fazem diferença na nossa vida",
+      "sua alegria contagiante deixa os nossos dias na escola muito mais leves"
     ];
     this.fechamentos = [
       "muito obrigado por acreditar em cada um de nós! ❤️",
-      "a gente te ama muito e somos gratos eternamente! 🌟",
-      "você deixou uma marca linda na história da nossa turma! 👏",
+      "a gente te ama muito e é muito grato por ter você como professora! 🌟",
+      "você faz parte da história linda da nossa turma! 👏",
       "o 6º B tem um orgulho imenso de ser seus alunos! ✨"
     ];
   }
-  getMessage(seed) {
-    const a = this.aberturas[seed % this.aberturas.length];
-    const m = this.meios[Math.floor(seed / 5) % this.meios.length];
-    const f = this.fechamentos[Math.floor(seed / 25) % this.fechamentos.length];
-    return `${a} ${m}... ${f}`;
-  }
   getFiveMessages() {
-    const list = [];
-    const base = Math.floor(Math.random() * 5000);
+    const msgs = [];
+    const offset = Math.floor(Math.random() * 100);
     for (let i = 0; i < 5; i++) {
-      list.push(this.getMessage(base + i * 47));
+      const a = this.aberturas[(i + offset) % this.aberturas.length];
+      const m = this.meios[(i * 2 + offset) % this.meios.length];
+      const f = this.fechamentos[(i * 3 + offset) % this.fechamentos.length];
+      msgs.push(`${a} ${m}... ${f}`);
     }
-    return list;
+    return msgs;
   }
 }
 
@@ -785,7 +816,6 @@ const GAME_STATE = {
   nextPhaseTarget: 1
 };
 
-// Processa transparência do rosto e já reduz para um canvas compacto (evita peso por quadro)
 function processAvatarTransparency(img) {
   try {
     const srcW = img.naturalWidth || img.width;
@@ -810,7 +840,6 @@ function processAvatarTransparency(img) {
     }
     offCtx.putImageData(imgData, 0, 0);
 
-    // Pré-escala para 208x200 (nitidez perfeita sem downsampling pesado toda hora)
     const compact = document.createElement('canvas');
     compact.width = 208;
     compact.height = 200;
@@ -898,7 +927,6 @@ const player = {
     ctx.scale(this.facing, this.squishY);
     ctx.translate(0, -this.h);
 
-    // Sombra suave sob os pés
     if (this.grounded) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.35)";
       ctx.beginPath();
@@ -906,15 +934,12 @@ const player = {
       ctx.fill();
     }
 
-    // 1. Pescoço
     ctx.fillStyle = "#e09f7a";
     ctx.fillRect(-12, 40, 24, 20);
 
-    // 2. Corpo: Blazer Azul Marinho
     ctx.fillStyle = "#1e3799";
     ctx.fillRect(-32, 52, 64, 48);
 
-    // Lapelas
     ctx.fillStyle = "#0c2461";
     ctx.beginPath();
     ctx.moveTo(-32, 52);
@@ -927,7 +952,6 @@ const player = {
     ctx.lineTo(22, 92);
     ctx.fill();
 
-    // Lenço Dourado
     ctx.fillStyle = "#ffd152";
     ctx.beginPath();
     ctx.moveTo(-12, 52);
@@ -935,23 +959,19 @@ const player = {
     ctx.lineTo(0, 70);
     ctx.fill();
 
-    // Saia executiva
     ctx.fillStyle = "#2f3542";
     ctx.fillRect(-30, 96, 60, 18);
 
-    // Pernas animadas
     const movingOnGround = this.grounded && Math.abs(this.vx) > 0.1;
     const legOffset = movingOnGround ? Math.sin(this.animTime) * 12 : 0;
     ctx.fillStyle = "#2f3542";
     ctx.fillRect(-24, 114, 16, 24 + legOffset);
     ctx.fillRect(8, 114, 16, 24 - legOffset);
 
-    // Sapatos pretos
     ctx.fillStyle = "#1e272e";
     ctx.fillRect(-28, 132 + legOffset, 20, 8);
     ctx.fillRect(8, 132 - legOffset, 20, 8);
 
-    // 3. Cabeça
     const av = GAME_STATE.dilmaAvatarImg;
     const hasPhoto = av && av.width > 0 && (av.complete === undefined || av.complete);
 
@@ -980,7 +1000,6 @@ const player = {
       ctx.strokeRect(4, 8, 14, 12);
     }
 
-    // 4. CANETÃO GIGANTE COM MIRA 360° NO MOUSE
     ctx.save();
     ctx.translate(28, 64);
 
@@ -1141,7 +1160,7 @@ class MagicPortal {
 }
 
 // ==========================================
-// 7. CHEFÃO: O DEVORADOR DAS SOMBRAS
+// 7. CHEFÃO: O DEVORADOR DAS SOMBRAS (EQUILIBRADO E JUSTO)
 // ==========================================
 class ShadowBoss {
   constructor() {
@@ -1149,8 +1168,8 @@ class ShadowBoss {
     this.y = 440;
     this.w = 300;
     this.h = 320;
-    this.maxHp = 100;
-    this.hp = 100;
+    this.maxHp = 75;
+    this.hp = 75;
 
     this.state = 'FLOAT';
     this.stateTimer = 0;
@@ -1174,51 +1193,67 @@ class ShadowBoss {
     if (this.state === 'DEAD') return;
 
     this.stateTimer++;
-    this.floatAngle += 0.04;
+    this.floatAngle += 0.035;
     if (this.hitFlash > 0) this.hitFlash--;
 
-    const isEnraged = this.hp < 50;
+    const isEnraged = this.hp < 35;
 
     switch (this.state) {
       case 'FLOAT':
-        this.y = 420 + Math.sin(this.floatAngle) * 70;
-        if (this.stateTimer > (isEnraged ? 70 : 120)) {
-          this.state = Math.random() > 0.5 ? 'CHASE' : 'TELEGRAPH';
+        this.y = 420 + Math.sin(this.floatAngle) * 60;
+        if (this.stateTimer > (isEnraged ? 105 : 145)) {
+          this.state = Math.random() > 0.55 ? 'CHASE' : 'TELEGRAPH';
           this.stateTimer = 0;
         }
         break;
 
       case 'CHASE':
-        const desiredX = player.x > 900 ? 360 : 1360;
-        this.x += (desiredX - this.x) * 0.035;
-        this.y = 400 + Math.sin(this.floatAngle * 1.5) * 40;
+        const desiredX = player.x > 900 ? 320 : 1360;
+        this.x += (desiredX - this.x) * 0.025;
+        this.y = 400 + Math.sin(this.floatAngle * 1.3) * 35;
 
-        if (this.stateTimer > (isEnraged ? 60 : 90)) {
+        if (this.stateTimer > (isEnraged ? 85 : 110)) {
           this.state = 'TELEGRAPH';
           this.stateTimer = 0;
         }
         break;
 
       case 'TELEGRAPH':
-        if (this.stateTimer % 4 === 0) {
-          addParticles(this.x + this.w / 2, this.y + this.h / 2, "#9b59b6", 4);
+        if (this.stateTimer % 5 === 0) {
+          addParticles(this.x + this.w / 2, this.y + this.h / 2, "#9b59b6", 3);
         }
-        if (this.stateTimer > 40) {
-          this.state = (Math.random() > 0.4 || isEnraged) ? 'ATTACK_ORBS' : 'ATTACK_SLAM';
+        if (this.stateTimer > 58) {
+          this.state = (Math.random() > 0.35 || isEnraged) ? 'ATTACK_ORBS' : 'ATTACK_SLAM';
           this.stateTimer = 0;
         }
         break;
 
-      case 'ATTACK_ORBS':
-        const shots = isEnraged ? 3 : 2;
-        for (let s = 0; s < shots; s++) {
-          const angle = Math.PI - 0.3 + (s * 0.3);
+      case 'ATTACK_ORBS': {
+        const cx = this.x + this.w / 2;
+        const cy = this.y + this.h / 2;
+        const baseAngle = Math.atan2((player.y + 60) - cy, (player.x + player.w / 2) - cx);
+        const speed = isEnraged ? 8.8 : 7.4;
+
+        if (isEnraged) {
+          [-0.22, 0.22].forEach(offset => {
+            const ang = baseAngle + offset;
+            GAME_STATE.projectiles.push({
+              x: cx,
+              y: cy,
+              vx: Math.cos(ang) * speed,
+              vy: Math.sin(ang) * speed,
+              r: 20,
+              color: "#e84118",
+              fromBoss: true
+            });
+          });
+        } else {
           GAME_STATE.projectiles.push({
-            x: this.x + 40,
-            y: this.y + 140,
-            vx: Math.cos(angle) * (isEnraged ? 12.4 : 10.0),
-            vy: Math.sin(angle) * 6,
-            r: 24,
+            x: cx,
+            y: cy,
+            vx: Math.cos(baseAngle) * speed,
+            vy: Math.sin(baseAngle) * speed,
+            r: 20,
             color: "#e84118",
             fromBoss: true
           });
@@ -1226,21 +1261,24 @@ class ShadowBoss {
         this.state = 'FLOAT';
         this.stateTimer = 0;
         break;
+      }
 
       case 'ATTACK_SLAM':
-        this.y += 24;
-        if (this.y >= 680) {
-          this.y = 680;
+        this.y += 16;
+        if (this.y >= 640) {
+          this.y = 640;
+          const bossCenter = this.x + this.w / 2;
+          const dir = (player.x + player.w / 2) < bossCenter ? -1 : 1;
           GAME_STATE.projectiles.push({
-            x: this.x,
-            y: 870,
-            vx: -13,
+            x: bossCenter + dir * 60,
+            y: 874,
+            vx: dir * 8.5,
             vy: 0,
-            r: 36,
+            r: 26,
             color: "#371b4a",
             fromBoss: true
           });
-          addParticles(this.x, 880, "#e74c3c", 28);
+          addParticles(bossCenter, 880, "#e74c3c", 22);
           sfx.playHit();
           this.state = 'FLOAT';
           this.stateTimer = 0;
@@ -1253,7 +1291,7 @@ class ShadowBoss {
     ctx.save();
     ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
 
-    const isEnraged = this.hp < 50;
+    const isEnraged = this.hp < 35;
     const pulseR = 160 + Math.sin(this.floatAngle * 3) * 12;
 
     VFX.drawGlow(0, 0, pulseR * 1.15, isEnraged ? "#c0392b" : "#6c1c8a", 0.65);
@@ -1312,7 +1350,6 @@ class ShadowBoss {
 
     ctx.restore();
 
-    // Barra de Vida
     const barW = 840;
     const barH = 40;
     const barX = (LOGICAL_W - barW) / 2;
@@ -1349,16 +1386,13 @@ class PlatformRenderer {
 }
 
 // ==============================================================
-// MÓDULO VISUAL OTIMIZADO (60 FPS com recorte de camadas e cache)
+// MÓDULO VISUAL OTIMIZADO (60 FPS)
 // ==============================================================
 const VFX = (() => {
   const TAU = Math.PI * 2, W = 2400, H = 1080, PAD = 90;
   const rngf = s => { s = (Math.abs(Math.floor(s)) % 2147483646) + 1; return () => (s = s * 16807 % 2147483647, (s - 1) / 2147483646); };
   const mkRaw = (w, h) => { const c = document.createElement('canvas'); c.width = Math.max(1, w); c.height = Math.max(1, h); return c; };
-  const mkScaled = (w, h) => {
-    const c = mkRaw(Math.ceil(w * RENDER_SCALE), Math.ceil(h * RENDER_SCALE));
-    return c;
-  };
+  const mkScaled = (w, h) => mkRaw(Math.ceil(w * RENDER_SCALE), Math.ceil(h * RENDER_SCALE));
   const mkLayer = (yMin, yMax, fn) => {
     const lh = yMax - yMin;
     const c = mkScaled(W, lh);
@@ -1371,7 +1405,6 @@ const VFX = (() => {
   const pick = (r, a) => a[Math.floor(r() * a.length)];
   const wrap = (x, fn) => { fn(x); if (x < 400) fn(x + W); if (x > W - 400) fn(x - W); };
 
-  // Sprites de brilho pré-renderizados
   let sprC = {};
   const spr = col => {
     if (!sprC[col]) {
@@ -1397,7 +1430,6 @@ const VFX = (() => {
   };
   const drawGlow = (x, y, rad, col, a) => glow(ctx, x, y, rad, col, a);
 
-  // ---------- elementos naturais ----------
   const leaf = (g, x, y, l, a, col) => {
     g.fillStyle = col;
     g.save();
@@ -1713,7 +1745,6 @@ const VFX = (() => {
     return l;
   };
 
-  // ---------- construção das camadas recortadas por fase ----------
   const build = {
     1() {
       const L = [];
@@ -1949,13 +1980,8 @@ const VFX = (() => {
     }
   };
 
-  // ---------- cache de camadas, céus e neblina ----------
   const cur = { phase: 0, layers: null };
-  let skyCache = {};
-  let fogCache = {};
-  let rayCache = {};
-  let pcache = new WeakMap();
-
+  let skyCache = {}, fogCache = {}, rayCache = {}, pcache = new WeakMap();
   const layersFor = ph => { if (cur.phase !== ph) { cur.layers = build[ph](); cur.phase = ph; } return cur.layers; };
 
   const SKY_STOPS = {
@@ -1983,8 +2009,7 @@ const VFX = (() => {
       const ch = Math.ceil(H * RENDER_SCALE);
       const c = mkRaw(2, ch), g = c.getContext('2d');
       const gr = g.createLinearGradient(0, 0, 0, ch);
-      const stops = SKY_STOPS[ph] || SKY_STOPS[1];
-      stops.forEach((s, i) => gr.addColorStop(i / (stops.length - 1), s));
+      (SKY_STOPS[ph] || SKY_STOPS[1]).forEach((s, i, arr) => gr.addColorStop(i / (arr.length - 1), s));
       g.fillStyle = gr;
       g.fillRect(0, 0, 2, ch);
       skyCache[ph] = c;
@@ -2035,7 +2060,6 @@ const VFX = (() => {
     ctx.globalAlpha = 1;
   };
 
-  // Desenha apenas a fatia horizontal visível da camada em proporção 1:1 física
   const drawLayerSliced = (l, camX, t) => {
     const S = RENDER_SCALE;
     const off = -(((camX * l.f + (l.drift || 0) * t) % W + W) % W);
@@ -2045,21 +2069,15 @@ const VFX = (() => {
     const psw1 = Math.min(l.c.width - psx1, Math.ceil(sw1 * S));
     const pdy = Math.round(l.yMin * S);
 
-    if (psw1 > 0) {
-      ctx.drawImage(l.c, psx1, 0, psw1, l.c.height, 0, pdy, psw1, l.c.height);
-    }
+    if (psw1 > 0) ctx.drawImage(l.c, psx1, 0, psw1, l.c.height, 0, pdy, psw1, l.c.height);
     if (sw1 < LOGICAL_W) {
-      const sw2 = LOGICAL_W - sw1;
-      const psw2 = Math.min(l.c.width, Math.ceil(sw2 * S));
-      if (psw2 > 0) {
-        ctx.drawImage(l.c, 0, 0, psw2, l.c.height, psw1, pdy, psw2, l.c.height);
-      }
+      const psw2 = Math.min(l.c.width, Math.ceil((LOGICAL_W - sw1) * S));
+      if (psw2 > 0) ctx.drawImage(l.c, 0, 0, psw2, l.c.height, psw1, pdy, psw2, l.c.height);
     }
   };
 
   const scene = (ph, camX) => {
     const t = performance.now() / 1000, Ls = layersFor(ph), S = RENDER_SCALE;
-
     drawSky(ph);
 
     ctx.setTransform(S, 0, 0, S, 0, 0);
@@ -2132,7 +2150,6 @@ const VFX = (() => {
     ctx.setTransform(S, 0, 0, S, 0, 0);
   };
 
-  // ---------- plataformas ----------
   const slab = (g, r, w, y0, h, c1, c2, specks, bump) => {
     const gr = g.createLinearGradient(0, y0, 0, y0 + h);
     gr.addColorStop(0, c1); gr.addColorStop(1, c2);
@@ -2234,7 +2251,6 @@ const VFX = (() => {
       ctx.beginPath(); ctx.ellipse(p.x + p.w / 2, p.y + p.h + 16, p.w * 0.42, 8, 0, 0, TAU); ctx.fill();
     }
     if (p.moveType) {
-      // Marcador visual discreto para plataforma móvel
       ctx.strokeStyle = 'rgba(255, 209, 82, 0.55)';
       ctx.lineWidth = 4;
       ctx.setLineDash([10, 8]);
@@ -2287,7 +2303,6 @@ const VFX = (() => {
     for (let i = 0; i < Ls.length; i++) {
       if (Ls[i].fg) drawLayerSliced(Ls[i], camX, t);
     }
-
     ctx.setTransform(S, 0, 0, S, 0, 0);
   };
 
@@ -2329,20 +2344,14 @@ const VFX = (() => {
   };
 
   const resetCaches = () => {
-    cur.phase = 0;
-    cur.layers = null;
-    skyCache = {};
-    fogCache = {};
-    rayCache = {};
-    sprC = {};
-    pcache = new WeakMap();
+    cur.phase = 0; cur.layers = null;
+    skyCache = {}; fogCache = {}; rayCache = {}; sprC = {}; pcache = new WeakMap();
   };
 
   return { scene, platform, postFX, itemGlow, playerFX, iris, drawGlow, resetCaches };
 })();
-
-// ==============================================================
-// 10. CONSTRUÇÃO PROCEDURAL DAS 5 FASES (SEM PADRÃO FIXO)
+// ===== FIM DA PARTE 1 (COLE A PARTE 2 LOGO ABAIXO DESTA LINHA) =====// ==============================================================
+// 10. CONSTRUÇÃO PROCEDURAL DAS 5 FASES (CHÃO NORMAL + BURACOS LEVES + PARKOUR ALEATÓRIO)
 // ==============================================================
 class LevelBuilder {
   static rand(min, max) {
@@ -2355,13 +2364,11 @@ class LevelBuilder {
     return Math.max(min, Math.min(max, v));
   }
 
-  // Calcula a distância horizontal máxima confortável para um salto de altura dy (negativo = subir)
   static safeMaxGap(dy) {
-    // Física do jogador: v0 = -24.8, g = 1.16, vx = 9.6
     const disc = 24.8 * 24.8 + 2 * 1.16 * dy;
     const airTicks = (24.8 + Math.sqrt(Math.max(40, disc))) / 1.16;
-    const maxReach = airTicks * 9.6 + 60;
-    return this.clamp(Math.floor(maxReach * 0.54), 105, 290);
+    const maxReach = airTicks * 9.6 + 50;
+    return this.clamp(Math.floor(maxReach * 0.48), 95, 235);
   }
 
   static setupPhase(phaseNum) {
@@ -2377,35 +2384,32 @@ class LevelBuilder {
     GAME_STATE.boss = null;
     cameraX = 0;
     document.getElementById('portal-hint').style.display = 'none';
-
     document.getElementById('m-attack').style.display = (phaseNum === 5) ? 'flex' : 'none';
 
     if (phaseNum === 5) {
       GAME_STATE.levelWidth = 1920;
       player.reset(240, 760);
       GAME_STATE.platforms.push({ x: 0, y: 900, w: 1920, h: 180 });
-      // Plataformas extras aleatórias na arena para desviar dos ataques
       const count = this.randInt(2, 3);
       for (let i = 0; i < count; i++) {
-        const px = 260 + i * 520 + this.randInt(-60, 80);
-        const py = this.randInt(640, 730);
-        GAME_STATE.platforms.push({ x: px, y: py, w: this.randInt(190, 250), h: 48 });
+        const px = 260 + i * 520 + this.randInt(-50, 70);
+        const py = this.randInt(650, 730);
+        GAME_STATE.platforms.push({ x: px, y: py, w: this.randInt(210, 260), h: 48 });
       }
       GAME_STATE.boss = new ShadowBoss();
       updateHUDGoal("🖊️", "BATALHA!");
     } else {
-      const { mainPath, endPlat, totalWidth } = this.createProceduralCourse(phaseNum);
+      const { parkourPlats, groundSegments, pits, totalWidth } = this.createProceduralCourse(phaseNum);
       GAME_STATE.levelWidth = totalWidth;
       GAME_STATE.portalSpawn = {
-        x: Math.round(endPlat.x + endPlat.w / 2),
-        y: Math.round(endPlat.y - 108)
+        x: totalWidth - 280,
+        y: 792
       };
 
       player.reset(160, 720);
 
       if (phaseNum === 1) {
-        const bCount = 7;
-        for (let i = 0; i < bCount; i++) {
+        for (let i = 0; i < 7; i++) {
           GAME_STATE.ambientEntities.push(
             new RealisticButterfly(
               this.rand(350, totalWidth - 300),
@@ -2416,8 +2420,7 @@ class LevelBuilder {
         }
       }
 
-      // Distribui os 5 objetivos em 5 zonas distintas do parkour gerado
-      const itemTargets = this.pickFiveItemSpots(mainPath);
+      const itemTargets = this.pickFiveItemSpots(parkourPlats);
       const itemTypes = { 1: 'book', 2: 'globe', 3: 'heart', 4: 'crystal' };
       const iType = itemTypes[phaseNum];
       const questions = phaseNum === 2 ? geoBank.getFiveQuestions() : null;
@@ -2429,7 +2432,7 @@ class LevelBuilder {
         const offsetX = this.rand(Math.max(20, plat.w * 0.25), Math.max(25, plat.w - w - 20));
         const item = {
           x: Math.round(plat.x + offsetX),
-          y: Math.round(plat.y - h - this.randInt(38, 72)),
+          y: Math.round(plat.y - h - this.randInt(38, 68)),
           w,
           h,
           type: iType,
@@ -2438,18 +2441,16 @@ class LevelBuilder {
         if (plat.moveType) {
           item.anchorPlat = plat;
           item.relX = offsetX;
-          item.relY = -h - this.randInt(40, 65);
+          item.relY = -h - this.randInt(40, 60);
         }
         if (questions) item.questionData = questions[i];
         if (msgs) item.message = msgs[i];
         GAME_STATE.items.push(item);
       });
 
-      // Armadilhas na Fase 4 (e 1-2 pontuais opcionais em fases 2/3 se plataforma for bem larga)
+      // Espinhos leves apenas na Fase 4 (em trechos largos e longe de buracos)
       if (phaseNum === 4) {
-        this.placeProceduralTraps(mainPath, 5);
-      } else if (phaseNum === 3) {
-        this.placeProceduralTraps(mainPath, 2);
+        this.placeGroundTraps(groundSegments, pits, 4);
       }
 
       const icons = { 1: "📚", 2: "🌎", 3: "❤️", 4: "💎" };
@@ -2462,24 +2463,50 @@ class LevelBuilder {
   }
 
   static createProceduralCourse(phaseNum) {
-    const targetLength = this.randInt(4300, 5100);
+    const totalWidth = this.randInt(4300, 4900);
     const allPlatforms = GAME_STATE.platforms;
-    const mainPath = [];
 
-    // Plataforma inicial segura
-    const startPlat = { x: 0, y: 900, w: this.randInt(430, 560), h: 180 };
-    allPlatforms.push(startPlat);
+    // 1. Chão normal na maior parte da fase, com apenas 2 a 4 buracos fáceis aleatórios
+    const numPits = phaseNum === 1 ? 2 : this.randInt(3, 4);
+    const pits = [];
+    const safeStart = 760;
+    const safeEnd = totalWidth - 680;
+    const zoneW = (safeEnd - safeStart) / numPits;
 
-    let curX = startPlat.x + startPlat.w;
-    let curY = 900;
+    for (let i = 0; i < numPits; i++) {
+      const pitW = phaseNum === 1 ? this.randInt(135, 175) : this.randInt(150, 205);
+      const minX = Math.floor(safeStart + i * zoneW + 70);
+      const maxX = Math.floor(safeStart + (i + 1) * zoneW - pitW - 70);
+      if (maxX > minX) {
+        const px = this.randInt(minX, maxX);
+        pits.push({ x: px, w: pitW });
+      }
+    }
+
+    const groundSegments = [];
+    let gCursor = 0;
+    pits.forEach(pit => {
+      if (pit.x > gCursor) {
+        const seg = { x: gCursor, y: 900, w: pit.x - gCursor, h: 180 };
+        allPlatforms.push(seg);
+        groundSegments.push(seg);
+      }
+      gCursor = pit.x + pit.w;
+    });
+    if (gCursor < totalWidth) {
+      const lastSeg = { x: gCursor, y: 900, w: totalWidth - gCursor, h: 180 };
+      allPlatforms.push(lastSeg);
+      groundSegments.push(lastSeg);
+    }
+
+    // 2. Parkour variado e sem padrão fixo acima do chão
+    const parkourPlats = [];
+    let curX = this.randInt(420, 560);
+    let curY = this.randInt(700, 765);
     let lastPattern = '';
+    const patternPool = ['floating_hop', 'stair_run', 'split_route', 'moving_bridge', 'low_arch'];
 
-    const patternPool = phaseNum === 1
-      ? ['ground_island', 'floating_hop', 'stair_run', 'split_route', 'precision_pillars', 'moving_bridge']
-      : ['ground_island', 'floating_hop', 'stair_run', 'split_route', 'precision_pillars', 'moving_bridge', 'floating_hop'];
-
-    while (curX < targetLength) {
-      // Nunca repete exatamente o mesmo bloco duas vezes seguidas
+    while (curX < totalWidth - 620) {
       let pattern;
       let guard = 0;
       do {
@@ -2488,90 +2515,79 @@ class LevelBuilder {
       } while (pattern === lastPattern && guard < 8);
       lastPattern = pattern;
 
-      if (pattern === 'ground_island') {
-        const nextY = 900;
-        const dy = nextY - curY;
-        const maxG = this.safeMaxGap(dy);
-        const gap = this.randInt(Math.min(115, maxG - 20), Math.min(235, maxG));
-        const w = this.randInt(300, 620);
-        const px = curX + gap;
-        const p = { x: px, y: 900, w, h: 180 };
-        allPlatforms.push(p);
-        mainPath.push(p);
-
-        // Chance de plataforma bônus flutuante acima da ilha
-        if (Math.random() < 0.65) {
-          const bw = this.randInt(160, 250);
-          const bx = px + this.randInt(40, Math.max(45, w - bw - 40));
-          const by = this.randInt(640, 745);
-          const bonus = { x: bx, y: by, w: bw, h: 48 };
-          allPlatforms.push(bonus);
-          if (Math.random() < 0.5) mainPath.push(bonus);
-        }
-
-        curX = px + w;
-        curY = 900;
+      // Garante entrada fácil a partir do chão sempre que inicia um novo bloco
+      if (curY < 660 && Math.random() < 0.45) {
+        const entryW = this.randInt(190, 270);
+        const entryY = this.randInt(705, 765);
+        const entryP = { x: curX, y: entryY, w: entryW, h: 48 };
+        allPlatforms.push(entryP);
+        parkourPlats.push(entryP);
+        curX += entryW;
+        curY = entryY;
       }
-      else if (pattern === 'floating_hop') {
+
+      if (pattern === 'floating_hop') {
         const steps = this.randInt(2, 3);
-        for (let s = 0; s < steps && curX < targetLength; s++) {
-          const minY = Math.max(330, curY - 170);
-          const maxY = Math.min(820, curY + 185);
+        for (let s = 0; s < steps && curX < totalWidth - 620; s++) {
+          const minY = Math.max(410, curY - 150);
+          const maxY = Math.min(770, curY + 155);
           const nextY = this.randInt(minY, maxY);
-          const dy = nextY - curY;
-          const maxG = this.safeMaxGap(dy);
-          const gap = this.randInt(95, Math.max(110, maxG));
-          const w = this.randInt(165, 310);
+          const maxG = this.safeMaxGap(nextY - curY);
+          const gap = this.randInt(95, Math.max(115, Math.min(205, maxG)));
+          const w = this.randInt(185, 310);
           const px = curX + gap;
           const p = { x: px, y: nextY, w, h: 48 };
           allPlatforms.push(p);
-          mainPath.push(p);
+          parkourPlats.push(p);
           curX = px + w;
           curY = nextY;
         }
       }
       else if (pattern === 'stair_run') {
-        const steps = this.randInt(2, 4);
-        const goingUp = curY > 620 ? true : (curY < 450 ? false : Math.random() < 0.55);
-        for (let s = 0; s < steps && curX < targetLength; s++) {
-          const stepDy = goingUp ? -this.randInt(80, 145) : this.randInt(75, 140);
-          const nextY = this.clamp(curY + stepDy, 330, 840);
-          const actualDy = nextY - curY;
-          const maxG = this.safeMaxGap(actualDy);
-          const gap = this.randInt(85, Math.max(105, Math.min(200, maxG)));
-          const w = this.randInt(140, 235);
+        const steps = this.randInt(2, 3);
+        const goingUp = curY > 620 ? true : (curY < 470 ? false : Math.random() < 0.55);
+        for (let s = 0; s < steps && curX < totalWidth - 620; s++) {
+          const stepDy = goingUp ? -this.randInt(85, 135) : this.randInt(80, 130);
+          const nextY = this.clamp(curY + stepDy, 390, 770);
+          const maxG = this.safeMaxGap(nextY - curY);
+          const gap = this.randInt(85, Math.max(105, Math.min(185, maxG)));
+          const w = this.randInt(175, 260);
           const px = curX + gap;
           const p = { x: px, y: nextY, w, h: 48 };
           allPlatforms.push(p);
-          mainPath.push(p);
+          parkourPlats.push(p);
           curX = px + w;
           curY = nextY;
         }
       }
-      else if (pattern === 'precision_pillars') {
-        const count = this.randInt(2, 3);
-        for (let s = 0; s < count && curX < targetLength; s++) {
-          const nextY = this.clamp(curY + this.randInt(-115, 120), 380, 830);
-          const maxG = this.safeMaxGap(nextY - curY);
-          const gap = this.randInt(100, Math.max(115, Math.min(215, maxG)));
-          const w = this.randInt(125, 165);
-          const px = curX + gap;
-          const p = { x: px, y: nextY, w, h: 48 };
-          allPlatforms.push(p);
-          mainPath.push(p);
-          curX = px + w;
-          curY = nextY;
+      else if (pattern === 'low_arch') {
+        const w1 = this.randInt(200, 290);
+        const y1 = this.randInt(670, 755);
+        const p1 = { x: curX + this.randInt(85, 145), y: y1, w: w1, h: 48 };
+        allPlatforms.push(p1);
+        parkourPlats.push(p1);
+
+        const y2 = this.randInt(540, 650);
+        const w2 = this.randInt(200, 280);
+        const p2 = { x: p1.x + w1 + this.randInt(95, 155), y: y2, w: w2, h: 48 };
+        if (p2.x + p2.w < totalWidth - 520) {
+          allPlatforms.push(p2);
+          parkourPlats.push(p2);
+          curX = p2.x + w2;
+          curY = y2;
+        } else {
+          curX = p1.x + w1;
+          curY = y1;
         }
       }
       else if (pattern === 'moving_bridge') {
         const isHoriz = Math.random() < 0.6;
-        const w = this.randInt(190, 250);
-        const range = isHoriz ? this.randInt(60, 95) : this.randInt(65, 105);
+        const w = this.randInt(200, 260);
+        const range = isHoriz ? this.randInt(55, 85) : this.randInt(55, 85);
 
         if (isHoriz) {
-          const nextY = this.clamp(curY + this.randInt(-120, 120), 400, 810);
-          const maxG = this.safeMaxGap(nextY - curY);
-          const gapIn = this.randInt(85, Math.max(95, Math.min(150, maxG - range)));
+          const nextY = this.clamp(curY + this.randInt(-100, 100), 460, 755);
+          const gapIn = this.randInt(80, 125);
           const baseX = curX + gapIn + range;
           const p = {
             x: baseX,
@@ -2582,20 +2598,18 @@ class LevelBuilder {
             baseX,
             baseY: nextY,
             range,
-            speed: this.rand(0.022, 0.034),
+            speed: this.rand(0.02, 0.03),
             phaseOffset: this.rand(0, Math.PI * 2),
             dx: 0,
             dy: 0
           };
           allPlatforms.push(p);
-          mainPath.push(p);
+          parkourPlats.push(p);
           curX = baseX + range + w;
           curY = nextY;
         } else {
-          const baseY = this.clamp(curY + this.randInt(-70, 70), 440, 740);
-          const maxG = this.safeMaxGap((baseY - range) - curY);
-          const gap = this.randInt(95, Math.max(110, Math.min(185, maxG)));
-          const px = curX + gap;
+          const baseY = this.clamp(curY + this.randInt(-60, 60), 480, 700);
+          const px = curX + this.randInt(95, 150);
           const p = {
             x: px,
             y: baseY,
@@ -2605,111 +2619,70 @@ class LevelBuilder {
             baseX: px,
             baseY,
             range,
-            speed: this.rand(0.022, 0.034),
+            speed: this.rand(0.02, 0.03),
             phaseOffset: this.rand(0, Math.PI * 2),
             dx: 0,
             dy: 0
           };
           allPlatforms.push(p);
-          mainPath.push(p);
+          parkourPlats.push(p);
           curX = px + w;
           curY = baseY;
         }
       }
       else if (pattern === 'split_route') {
-        // Caminho superior e caminho inferior paralelos que se encontram adiante
-        const spanStart = curX;
-        let topX = spanStart, topY = this.clamp(curY - this.randInt(110, 160), 340, 620);
-        let botX = spanStart, botY = this.clamp(curY + this.randInt(70, 150), 660, 880);
+        const topY = this.clamp(curY - this.randInt(110, 145), 390, 560);
+        const botY = this.randInt(685, 760);
+        const gap = this.randInt(95, 145);
 
-        for (let s = 0; s < 2; s++) {
-          const tw = this.randInt(180, 240);
-          const tGap = s === 0 ? this.randInt(95, 145) : this.randInt(115, 185);
-          const tp = { x: topX + tGap, y: topY, w: tw, h: 48 };
-          allPlatforms.push(tp);
-          mainPath.push(tp);
-          topX = tp.x + tw;
-          topY = this.clamp(topY + this.randInt(-65, 65), 340, 620);
+        const tp = { x: curX + gap, y: topY, w: this.randInt(190, 260), h: 48 };
+        const bp = { x: curX + gap + this.randInt(10, 50), y: botY, w: this.randInt(210, 290), h: 48 };
+        allPlatforms.push(tp, bp);
+        parkourPlats.push(tp, bp);
 
-          const bw = this.randInt(200, 270);
-          const bGap = s === 0 ? this.randInt(95, 155) : this.randInt(115, 185);
-          const bp = { x: botX + bGap, y: botY, w: bw, h: botY >= 900 ? 180 : 48 };
-          allPlatforms.push(bp);
-          botX = bp.x + bw;
-          botY = this.clamp(botY + this.randInt(-55, 65), 650, 900);
-        }
-
-        // Plataforma de convergência acessível por cima e por baixo
-        const mergeX = Math.max(topX, botX) + this.randInt(100, 155);
-        const mergeY = this.clamp(Math.round((topY + botY) / 2), 500, 740);
-        const mergeP = { x: mergeX, y: mergeY, w: this.randInt(240, 320), h: 48 };
-        allPlatforms.push(mergeP);
-        mainPath.push(mergeP);
-        curX = mergeP.x + mergeP.w;
-        curY = mergeY;
+        curX = Math.max(tp.x + tp.w, bp.x + bp.w);
+        curY = Math.random() < 0.5 ? topY : botY;
       }
+
+      // Espaço aleatório entre conjuntos de plataformas (com chão normal embaixo)
+      curX += this.randInt(110, 210);
+      if (Math.random() < 0.45) curY = this.randInt(700, 765);
     }
 
-    // Plataforma final onde nasce o Portal Mágico
-    const endYChoices = [900, 720, 620].filter(ey => ey - curY >= -165);
-    const endY = endYChoices.length ? endYChoices[Math.floor(Math.random() * endYChoices.length)] : this.clamp(curY, 540, 900);
-    const endGap = this.randInt(100, Math.max(120, Math.min(200, this.safeMaxGap(endY - curY))));
-    const endPlat = {
-      x: curX + endGap,
-      y: endY,
-      w: this.randInt(420, 520),
-      h: endY >= 900 ? 180 : 48
-    };
-    allPlatforms.push(endPlat);
-
-    return {
-      mainPath,
-      endPlat,
-      totalWidth: endPlat.x + endPlat.w + 120
-    };
+    return { parkourPlats, groundSegments, pits, totalWidth };
   }
 
-  static pickFiveItemSpots(mainPath) {
-    if (mainPath.length <= 5) return mainPath.slice(0, 5);
+  static pickFiveItemSpots(parkourPlats) {
+    if (parkourPlats.length <= 5) return parkourPlats.slice(0, 5);
     const spots = [];
-    const sliceSize = mainPath.length / 5;
+    const sliceSize = parkourPlats.length / 5;
     for (let i = 0; i < 5; i++) {
       const start = Math.floor(i * sliceSize);
-      const end = Math.min(mainPath.length - 1, Math.floor((i + 1) * sliceSize) - 1);
+      const end = Math.min(parkourPlats.length - 1, Math.floor((i + 1) * sliceSize) - 1);
       const candidates = [];
       for (let j = start; j <= end; j++) {
-        if (!mainPath[j].moveType) candidates.push(mainPath[j]);
+        if (!parkourPlats[j].moveType) candidates.push(parkourPlats[j]);
       }
-      const pool = candidates.length ? candidates : mainPath.slice(start, end + 1);
+      const pool = candidates.length ? candidates : parkourPlats.slice(start, end + 1);
       spots.push(pool[Math.floor(Math.random() * pool.length)]);
     }
     return spots;
   }
 
-  static placeProceduralTraps(mainPath, maxCount) {
-    const candidates = mainPath.filter(p => !p.moveType && p.w >= 260 && p.x > 460);
-    candidates.sort(() => Math.random() - 0.5);
+  static placeGroundTraps(groundSegments, pits, maxCount) {
+    const candidates = groundSegments.filter(seg => seg.w >= 460);
     let placed = 0;
-
     for (let i = 0; i < candidates.length && placed < maxCount; i++) {
-      const plat = candidates[i];
-      const trapW = plat.w >= 380 ? 90 : 60;
-      const minX = plat.x + 85;
-      const maxX = plat.x + plat.w - trapW - 85;
+      const seg = candidates[i];
+      const minX = Math.max(520, seg.x + 150);
+      const maxX = Math.min(GAME_STATE.levelWidth - 520, seg.x + seg.w - 220);
       if (maxX <= minX) continue;
 
       const tx = this.randInt(minX, maxX);
-      const overlapsItem = GAME_STATE.items.some(it =>
-        Math.abs((it.x + it.w / 2) - (tx + trapW / 2)) < 95 && Math.abs(it.y - plat.y) < 160
-      );
-      if (overlapsItem) continue;
+      const nearPit = pits.some(p => Math.abs(tx - p.x) < 140 || Math.abs(tx - (p.x + p.w)) < 140);
+      if (nearPit) continue;
 
-      GAME_STATE.traps.push({
-        x: tx,
-        y: plat.y - 34,
-        w: trapW,
-        h: 34
-      });
+      GAME_STATE.traps.push({ x: tx, y: 866, w: 60, h: 34 });
       placed++;
     }
   }
@@ -2784,16 +2757,20 @@ const keys = {};
 
 const menuModal = document.getElementById('menu-modal');
 const creditsModal = document.getElementById('credits-modal');
+const heartModal = document.getElementById('heart-modal');
+const heartModalBody = document.getElementById('heart-modal-body');
 const startScreen = document.getElementById('start-screen');
 const victoryScreen = document.getElementById('victory-screen');
 const btnToggleQuality = document.getElementById('btn-toggle-quality');
 let creditsFromStart = false;
+let heartModalOpenTime = 0;
 
 function isOverlayBlockingMenu() {
   return (
     startScreen.style.display !== 'none' ||
     victoryScreen.style.display !== 'none' ||
-    quizModal.style.display === 'flex'
+    quizModal.style.display === 'flex' ||
+    heartModal.style.display === 'flex'
   );
 }
 
@@ -2805,7 +2782,7 @@ function openMenu() {
 
 function closeMenu() {
   menuModal.style.display = 'none';
-  if (quizModal.style.display !== 'flex' && creditsModal.style.display !== 'flex') {
+  if (quizModal.style.display !== 'flex' && creditsModal.style.display !== 'flex' && heartModal.style.display !== 'flex') {
     GAME_STATE.paused = false;
   }
 }
@@ -2828,6 +2805,21 @@ function closeCredits() {
   }
 }
 
+function openHeartMessage(msg) {
+  GAME_STATE.paused = true;
+  heartModalOpenTime = performance.now();
+  heartModalBody.textContent = `"${msg}"`;
+  heartModal.style.display = 'flex';
+}
+
+function closeHeartMessage() {
+  if (heartModal.style.display !== 'flex') return;
+  heartModal.style.display = 'none';
+  GAME_STATE.paused = false;
+}
+
+document.getElementById('btn-close-heart').onclick = closeHeartMessage;
+
 btnToggleQuality.onclick = () => {
   if (RENDER_SCALE < 0.9) {
     RENDER_SCALE = 1;
@@ -2846,6 +2838,12 @@ btnToggleQuality.onclick = () => {
 window.addEventListener('keydown', e => {
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"].includes(e.code)) {
     e.preventDefault();
+  }
+  if (heartModal.style.display === 'flex') {
+    if ((e.code === 'Enter' || e.code === 'Space' || e.code === 'Escape') && performance.now() - heartModalOpenTime > 450) {
+      closeHeartMessage();
+    }
+    return;
   }
   if (e.code === 'Escape') {
     if (creditsModal.style.display === 'flex') {
@@ -2921,15 +2919,16 @@ document.getElementById('btn-menu').onclick = () => {
 document.getElementById('btn-resume').onclick = closeMenu;
 document.getElementById('btn-restart-phase').onclick = () => {
   menuModal.style.display = 'none';
+  heartModal.style.display = 'none';
   GAME_STATE.paused = false;
   GAME_STATE.transitioning = false;
   GAME_STATE.transitionAlpha = 0;
   GAME_STATE.lives = 5;
-  toast.classList.remove('show');
   LevelBuilder.setupPhase(GAME_STATE.phase);
 };
 document.getElementById('btn-restart-game').onclick = () => {
   menuModal.style.display = 'none';
+  heartModal.style.display = 'none';
   GAME_STATE.won = false;
   GAME_STATE.over = false;
   GAME_STATE.paused = false;
@@ -2937,7 +2936,6 @@ document.getElementById('btn-restart-game').onclick = () => {
   GAME_STATE.transitionAlpha = 0;
   GAME_STATE.lives = 5;
   GAME_STATE.score = 0;
-  toast.classList.remove('show');
   LevelBuilder.setupPhase(1);
 };
 document.getElementById('btn-open-credits').onclick = () => openCredits(false);
@@ -2947,7 +2945,7 @@ document.getElementById('btn-back-title').onclick = () => {
   menuModal.style.display = 'none';
   creditsModal.style.display = 'none';
   quizModal.style.display = 'none';
-  toast.classList.remove('show');
+  heartModal.style.display = 'none';
   GAME_STATE.paused = true;
   GAME_STATE.transitioning = false;
   GAME_STATE.transitionAlpha = 0;
@@ -2955,7 +2953,7 @@ document.getElementById('btn-back-title').onclick = () => {
 };
 
 // ==========================================
-// 12. QUIZ MODAL
+// 12. QUIZ MODAL (SEM REVELAR RESPOSTA NO ERRO)
 // ==========================================
 const quizModal = document.getElementById('quiz-modal');
 const quizTitle = document.getElementById('quiz-title');
@@ -3004,17 +3002,24 @@ function handleAnswer(selected, correct, btn) {
       if (GAME_STATE.objectiveCount >= 5 && !GAME_STATE.portal) {
         spawnPortal();
       }
-    }, 900);
+    }, 850);
   } else {
     btn.classList.add('wrong');
     quizFeedback.style.color = '#ff4757';
-    quizFeedback.textContent = `❌ Quase! A resposta correta era: ${correct}`;
+    // Nunca revela a resposta correta ao errar!
+    quizFeedback.textContent = '❌ Ops! Resposta incorreta. Tente novamente!';
     sfx.playWrong();
+
+    // Embaralha as alternativas para a próxima tentativa
+    currentActiveItem.questionData.options.sort(() => 0.5 - Math.random());
 
     setTimeout(() => {
       quizModal.style.display = 'none';
       GAME_STATE.paused = false;
-    }, 1300);
+      // Afasta levemente o jogador do globo para não reabrir no mesmo frame
+      player.vy = -12;
+      player.x = Math.max(0, player.x - 55);
+    }, 1000);
   }
 }
 
@@ -3022,19 +3027,6 @@ function spawnPortal() {
   sfx.playPortalSpawn();
   GAME_STATE.portal = new MagicPortal(GAME_STATE.portalSpawn.x, GAME_STATE.portalSpawn.y);
   addParticles(GAME_STATE.portalSpawn.x, GAME_STATE.portalSpawn.y, "#ffd152", 35);
-}
-
-const toast = document.getElementById('heart-toast');
-const toastBody = document.getElementById('toast-body');
-let toastTimer = null;
-
-function showHeartMessage(msg) {
-  toastBody.textContent = `"${msg}"`;
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 4200);
 }
 
 // ==========================================
@@ -3060,7 +3052,6 @@ function update() {
     return;
   }
 
-  // Atualiza plataformas móveis primeiro
   for (let i = 0; i < GAME_STATE.platforms.length; i++) {
     const plat = GAME_STATE.platforms[i];
     if (plat.moveType) {
@@ -3076,7 +3067,6 @@ function update() {
     }
   }
 
-  // Move itens ancorados em plataformas móveis
   for (let i = 0; i < GAME_STATE.items.length; i++) {
     const it = GAME_STATE.items[i];
     if (!it.collected && it.anchorPlat) {
@@ -3085,7 +3075,6 @@ function update() {
     }
   }
 
-  // Carrega o jogador junto com a plataforma móvel em que ele está pisando
   if (player.grounded && player.standingPlatform && player.standingPlatform.moveType) {
     player.x += player.standingPlatform.dx;
     player.y += player.standingPlatform.dy;
@@ -3094,7 +3083,7 @@ function update() {
   if (player.invulnerableTime > 0) player.invulnerableTime--;
   if (player.attackCooldown > 0) player.attackCooldown--;
 
- const leftPressed = keys['ArrowLeft'] || keys['KeyA'];
+  const leftPressed = keys['ArrowLeft'] || keys['KeyA'];
   const rightPressed = keys['ArrowRight'] || keys['KeyD'];
 
   if (leftPressed && !rightPressed) {
@@ -3164,7 +3153,6 @@ function update() {
       player.grounded = true;
       player.standingPlatform = plat;
 
-      // Salva ponto seguro em plataformas fixas longe de espinhos
       if (!plat.moveType && plat.w >= 110) {
         const nearTrap = GAME_STATE.traps.some(t =>
           Math.abs((t.x + t.w / 2) - (player.x + player.w / 2)) < 90 && Math.abs(t.y - plat.y) < 60
@@ -3178,7 +3166,6 @@ function update() {
     }
   }
 
-  // Queda em buraco volta na última plataforma segura
   if (player.y > 1160) {
     player.x = player.lastSafeX;
     player.y = player.lastSafeY;
@@ -3236,8 +3223,8 @@ function update() {
           GAME_STATE.objectiveCount++;
           GAME_STATE.score += 150;
           addParticles(item.x + 34, item.y + 34, "#ff4757", 20);
-          showHeartMessage(item.message);
           updateHUDGoal("❤️", `${GAME_STATE.objectiveCount} / 5`);
+          openHeartMessage(item.message);
           if (GAME_STATE.objectiveCount >= 5 && !GAME_STATE.portal) spawnPortal();
         } else if (item.type === 'crystal') {
           item.collected = true;
@@ -3261,7 +3248,6 @@ function update() {
     }
   }
 
-  // Batalha
   if (GAME_STATE.phase === 5 && GAME_STATE.boss) {
     GAME_STATE.boss.update();
 
@@ -3271,7 +3257,7 @@ function update() {
       p.y += p.vy;
 
       if (!p.fromBoss && checkOverlapCircleRect(p, GAME_STATE.boss)) {
-        GAME_STATE.boss.takeDamage(4);
+        GAME_STATE.boss.takeDamage(5);
         addParticles(p.x, p.y, p.color, 14);
         GAME_STATE.projectiles.splice(i, 1);
         continue;
@@ -3310,7 +3296,6 @@ function takePlayerDamage() {
 
   if (GAME_STATE.lives <= 0) {
     GAME_STATE.lives = 5;
-    // Ao perder todas as vidas, gera um novo parkour para a fase atual
     LevelBuilder.setupPhase(GAME_STATE.phase);
   }
 }
@@ -3481,7 +3466,6 @@ function draw() {
 
   VFX.postFX(cameraX);
 
-  // Mira Reticular na Arena
   if (GAME_STATE.phase === 5) {
     ctx.strokeStyle = "rgba(255, 209, 82, 0.85)";
     ctx.lineWidth = 3;
@@ -3510,7 +3494,6 @@ function draw() {
   }
 }
 
-// Loop com passo fixo (60Hz) para eliminar câmera lenta em qualquer monitor/PC
 let loopStarted = false;
 let lastFrameTime = 0;
 let accumulator = 0;
