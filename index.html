@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Dilma Quest — A Jornada Lendária (Edição Turbinada)</title>
+  <title>Dilma Quest — A Jornada Lendária (Grupo do Rafael)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -172,21 +172,27 @@
       text-align: left;
       transition: all 0.15s;
     }
-    .opt-btn:hover {
+    .opt-btn:hover:not(:disabled) {
       background: #38475c;
       border-color: #ffd152;
       transform: translateX(6px);
+    }
+    .opt-btn:disabled {
+      cursor: default;
+      opacity: 0.78;
     }
     .opt-btn.correct {
       background: #2ed573 !important;
       border-color: #7bed9f !important;
       color: #0c2e17 !important;
       font-weight: 700;
+      opacity: 1 !important;
     }
     .opt-btn.wrong {
       background: #ff4757 !important;
       border-color: #ff6b81 !important;
       color: #fff !important;
+      opacity: 0.85 !important;
     }
 
     .menu-btn-list {
@@ -305,11 +311,12 @@
       align-items: center;
       text-align: center;
       padding: 30px;
+      overflow-y: auto;
     }
     .btn-main {
-      margin-top: 24px;
-      padding: 18px 48px;
-      font-size: 23px;
+      margin-top: 20px;
+      padding: 18px 44px;
+      font-size: 22px;
       font-weight: 700;
       font-family: inherit;
       background: linear-gradient(45deg, #ffd152, #ff9f1a);
@@ -392,9 +399,9 @@
   <!-- Modal Carinho (Pausa o jogo para ler a mensagem do coração) -->
   <div class="modal-overlay" id="heart-modal">
     <div class="modal-box" style="max-width:580px; border-color:#ff6b81; box-shadow:0 20px 50px rgba(0,0,0,0.95), 0 0 40px rgba(255,107,129,0.4);">
-      <div class="modal-title" style="color:#ff6b81;">❤️ MENSAGEM DA TURMA DO 6º B</div>
+      <div class="modal-title" style="color:#ff6b81;">❤️ MENSAGEM DO GRUPO DO RAFAEL</div>
       <div class="modal-text" id="heart-modal-body" style="font-size:22px; line-height:1.6; color:#fff;">
-        "Professora Dilma, seu carinho ilumina nossa sala!"
+        "Temos muito orgulho de ter você como nossa professora, Dilma!"
       </div>
       <button class="menu-action-btn primary" id="btn-close-heart" style="width:100%; background:linear-gradient(45deg, #ff6b81, #ff4757); color:#fff; border-color:#ffb8c1;">
         💛 Continuar Aventura
@@ -428,7 +435,7 @@
         <div style="color:#ffd152; font-weight:700; font-size:18px; margin-bottom:6px;">
           💛 Homenagem Especial à Professora Dilma
         </div>
-        Este jogo foi criado com todo carinho pela <b>Turma do 6º B</b> como forma de agradecer por cada aula de Geografia, cada ensinamento, cada conselho e por tornar nossos dias na escola ainda mais especiais e alegres!
+        Este jogo foi criado com todo carinho pelo <b>Grupo do Rafael</b> para mostrar o quanto temos orgulho de ter você como nossa professora de Geografia e agradecer por tornar cada aula muito mais divertida e especial!
       </div>
       <div class="credits-card">
         <div style="color:#70a1ff; font-weight:700; margin-bottom:6px;">🎮 Controles da Jornada</div>
@@ -459,7 +466,7 @@
       🎮 DILMA QUEST
     </h1>
     <h3 style="font-size:22px; color:#a29bfe; margin-bottom:22px;">
-      A Jornada Lendária — Homenagem da Turma do 6º B
+      A Jornada Lendária — Homenagem do Grupo do Rafael
     </h3>
     <p style="max-width:640px; font-size:17px; color:#dfe6e9; line-height:1.65; margin-bottom:12px;">
       • Andar: <b>A / D</b> ou <b>Setas Esquerda / Direita</b><br>
@@ -476,20 +483,22 @@
   <div class="screen-overlay" id="victory-screen" style="display:none;">
     <h1 style="font-size:42px; color:#ffd152; margin-bottom:16px;">🎉 VITÓRIA LENDÁRIA! 🎉</h1>
     <h2 style="font-size:26px; color:#ff7675; max-width:700px; line-height:1.45; margin-bottom:16px;">
-      "Professora Dilma, você é a melhor! Obrigado por estar sempre com a gente!"
+      "Professora Dilma, você é a melhor! Temos muito orgulho de ter você como nossa professora!"
     </h2>
-    <p style="font-size:19px; color:#dfe6e9; max-width:640px; line-height:1.55; margin-bottom:16px;">
-      Obrigado por cada aula incrível, cada ensinamento, cada conselho e por tornar nossos dias na escola muito mais alegres. Esta aventura foi feita com todo carinho para você!
+    <p style="font-size:19px; color:#dfe6e9; max-width:660px; line-height:1.55; margin-bottom:16px;">
+      Gostar de tarefa ❌ &nbsp;|&nbsp; Gostar da Professora Dilma ✅💚<br>
+      Obrigado por cada aula incrível e por deixar os nossos dias na escola muito mais divertidos!
     </p>
     <div style="font-family:'Press Start 2P', monospace; font-size:14px; color:#ffd152; margin-bottom:22px; letter-spacing:1px;">
-      UMA HOMENAGEM DA TURMA DO 6º B.
+      UMA HOMENAGEM DO GRUPO DO RAFAEL.
     </div>
 
-    <div style="background:rgba(255,255,255,0.08); padding:12px 28px; border-radius:16px; margin-bottom:16px; font-size:16px;">
+    <div style="background:rgba(255,255,255,0.08); padding:12px 28px; border-radius:16px; margin-bottom:10px; font-size:16px;">
       Jornadas Concluídas: <b id="stat-journeys" style="color:#ffd152">1</b> | Pontuação Final: <b id="stat-score" style="color:#2ed573">0</b>
     </div>
 
-    <button class="btn-main" id="btn-restart">COMEÇAR NOVA JORNADA (NOVO PARKOUR) 🔁</button>
+    <button class="btn-main" id="btn-victory-menu">🏠 VOLTAR AO MENU INICIAL</button>
+    <button class="btn-secondary" id="btn-restart">🔁 COMEÇAR NOVA JORNADA (NOVO PARKOUR)</button>
   </div>
 </div>
 
@@ -642,57 +651,146 @@ class SoundFX {
 }
 const sfx = new SoundFX();
 
-// ==========================================
-// 2. BANCO DE GEOGRAFIA (45 PERGUNTAS SEM REPETIR)
-// ==========================================
+// ============================================================
+// 2. BANCO COMPLETO DE GEOGRAFIA DO 6º ANO (~95 PERGUNTAS!)
+//    Todos os temas: Paisagem, Orientação, Cartografia, Terra,
+//    Relevo, Clima, Hidrografia, Biomas, Desmatamento,
+//    Sustentabilidade, Economia e Estados/Capitais do Brasil
+// ============================================================
 class GeographyQuestionBank {
   constructor() {
     this.questions = [
-      { q: "Qual forma de relevo é caracterizada por áreas planas e elevadas em relação às terras vizinhas?", a: "Planalto", err: ["Planície", "Depressão Absoluta", "Cordilheira"] },
-      { q: "Qual linha imaginária divide a Terra nos Hemisférios Ocidental e Oriental?", a: "Meridiano de Greenwich", err: ["Linha do Equador", "Trópico de Câncer", "Círculo Polar Ártico"] },
-      { q: "Qual linha imaginária divide a Terra em Hemisfério Norte e Hemisfério Sul?", a: "Linha do Equador", err: ["Meridiano de Greenwich", "Trópico de Capricórnio", "Círculo Polar Antártico"] },
-      { q: "Qual é o maior oceano do planeta em área e profundidade?", a: "Oceano Pacífico", err: ["Oceano Atlântico", "Oceano Índico", "Oceano Glacial Ártico"] },
-      { q: "Qual bioma exclusivamente brasileiro tem clima semiárido e cactos como o mandacaru?", a: "Caatinga", err: ["Pampa", "Mata de Araucárias", "Floresta Amazônica"] },
-      { q: "Em qual cordilheira da América do Sul fica a nascente do rio Amazonas?", a: "Cordilheira dos Andes", err: ["Montanhas Rochosas", "Montes Urais", "Cordilheira do Himalaia"] },
-      { q: "O movimento de rotação da Terra ao redor do seu próprio eixo resulta em:", a: "Sucessão dos dias e das noites", err: ["Estações do ano", "Eclipses solares", "Fases da Lua"] },
-      { q: "Qual movimento a Terra realiza ao redor do Sol, durando cerca de 365 dias e gerando as estações do ano?", a: "Translação", err: ["Rotação", "Precessão", "Erupção"] },
-      { q: "Em qual camada da atmosfera acontecem os fenômenos do clima, como chuvas e ventos?", a: "Troposfera", err: ["Estratosfera", "Mesosfera", "Termosfera"] },
-      { q: "As linhas imaginárias horizontais paralelas ao Equador são chamadas de:", a: "Paralelos (Latitudes)", err: ["Meridianos (Longitudes)", "Zênites", "Isóbaras"] },
-      { q: "Qual é o maior rio em volume de água de todo o planeta Terra?", a: "Rio Amazonas", err: ["Rio Nilo", "Rio Mississipi", "Rio Yangtzé"] },
-      { q: "Qual bioma é considerado a 'caixa d’água do Brasil' por conter nascentes das maiores bacias?", a: "Cerrado", err: ["Caatinga", "Pantanal", "Pampa"] },
-      { q: "O choque e atrito entre as placas tectônicas é a causa direta de:", a: "Montanhas, terremotos e vulcões", err: ["Marés e correntes marítimas", "Frentes frias", "Desertos de areia"] },
-      { q: "Qual é o menor continente do mundo em área territorial?", a: "Oceania", err: ["Europa", "América do Sul", "Antártida"] },
-      { q: "Em um mapa, o que a escala cartográfica nos informa?", a: "A proporção entre o mapa e a realidade", err: ["A direção do norte magnético", "A altitude do terreno", "A data de criação"] },
-      { q: "Qual bioma de clima frio polar é coberto principalmente por musgos e líquens?", a: "Tundra", err: ["Floresta Tropical", "Savana", "Estepe"] },
-      { q: "Qual reservatório subterrâneo gigante estende-se pelo Brasil, Argentina, Paraguai e Uruguai?", a: "Aquífero Guarani", err: ["Aquífero Alter do Chão", "Aquífero Nubiano", "Bacia do Paraná"] },
-      { q: "Qual instrumento de orientação indica o Norte magnético através de uma agulha imantada?", a: "Bússola", err: ["Termômetro", "Barômetro", "Pluviômetro"] },
-      { q: "Na Rosa dos Ventos, quais são os quatro pontos cardeais?", a: "Norte, Sul, Leste e Oeste", err: ["Nordeste, Sudeste, Noroeste e Sudoeste", "Cima, Baixo, Direita e Esquerda", "Sol, Lua, Terra e Mar"] },
-      { q: "Tomando o Sol como referência pela manhã, em qual ponto cardeal ele nasce?", a: "Leste (Oriente)", err: ["Oeste (Ocidente)", "Norte", "Sul"] },
-      { q: "Em um mapa, qual elemento explica o significado dos símbolos, cores e linhas usados?", a: "Legenda", err: ["Título", "Escala", "Rosa dos Ventos"] },
-      { q: "Qual é a camada mais externa e sólida do planeta Terra, onde vivemos?", a: "Crosta terrestre", err: ["Manto", "Núcleo interno", "Núcleo externo"] },
-      { q: "Qual camada interna da Terra fica entre a crosta e o núcleo e contém magma?", a: "Manto", err: ["Atmosfera", "Hidrosfera", "Crosta oceânica"] },
-      { q: "Qual é a camada mais interna e mais quente da Terra, rica em ferro e níquel?", a: "Núcleo", err: ["Troposfera", "Litosfera", "Estratosfera"] },
-      { q: "Qual é a diferença entre tempo atmosférico e clima?", a: "O tempo muda a cada dia; o clima é o padrão observado por muitos anos", err: ["Tempo e clima são exatamente a mesma coisa", "O clima muda de hora em hora e o tempo nunca muda", "O tempo só existe no verão"] },
-      { q: "Qual bioma brasileiro é a maior planície alagável do planeta?", a: "Pantanal", err: ["Caatinga", "Pampa", "Cerrado"] },
-      { q: "Qual bioma brasileiro predominava originalmente no litoral do Brasil, mas foi muito reduzido?", a: "Mata Atlântica", err: ["Tundra", "Deserto", "Taiga"] },
-      { q: "Qual bioma brasileiro é formado por campos naturais no extremo sul do país (Rio Grande do Sul)?", a: "Pampa", err: ["Caatinga", "Floresta Amazônica", "Pantanal"] },
-      { q: "Qual é o maior deserto quente do mundo, localizado no norte da África?", a: "Deserto do Saara", err: ["Deserto do Atacama", "Deserto de Gobi", "Caatinga"] },
-      { q: "Qual famoso rio africano atravessa o Egito e foi essencial para a civilização antiga?", a: "Rio Nilo", err: ["Rio São Francisco", "Rio Paraná", "Rio Reno"] },
-      { q: "No ciclo da água, a passagem da água líquida dos rios e oceanos para vapor se chama:", a: "Evaporação", err: ["Precipitação", "Infiltração", "Solidificação"] },
-      { q: "No ciclo da água, o retorno da água das nuvens para a superfície na forma de chuva é:", a: "Precipitação", err: ["Evaporação", "Transpiração", "Sublimação"] },
-      { q: "Como se chama o desgaste e o transporte do solo pela ação da chuva, dos rios ou do vento?", a: "Erosão", err: ["Fotossíntese", "Rotação", "Urbanização"] },
-      { q: "Uma paisagem formada apenas por elementos da natureza, sem interferência humana, é uma:", a: "Paisagem natural", err: ["Paisagem cultural", "Paisagem urbana", "Paisagem industrial"] },
+      // --- PAISAGEM, LUGAR, ESPAÇO GEOGRÁFICO E TERRITÓRIO ---
+      { q: "Uma paisagem formada apenas por elementos da natureza, sem interferência humana, é chamada de:", a: "Paisagem natural", err: ["Paisagem cultural", "Paisagem urbana", "Paisagem industrial"] },
       { q: "Uma paisagem modificada pelo trabalho humano (com prédios, estradas e pontes) é uma:", a: "Paisagem cultural (ou humanizada)", err: ["Paisagem virgem", "Paisagem abissal", "Paisagem lunar"] },
-      { q: "Quais dos exemplos abaixo são recursos naturais renováveis?", a: "Luz solar, vento e água", err: ["Petróleo, carvão mineral e gás natural", "Ouro, ferro e diamante", "Urânio e carvão"] },
-      { q: "Qual recurso energético é um combustível fóssil não renovável muito usado para fazer gasolina?", a: "Petróleo", err: ["Energia solar", "Energia eólica", "Energia das marés"] },
+      { q: "Na Geografia, o espaço com o qual criamos vínculos afetivos e que faz parte do nosso dia a dia (como a casa e a escola) é o:", a: "Lugar", err: ["Hemisfério", "Meridiano", "Fuso horário"] },
+      { q: "O resultado da interação contínua entre a sociedade humana e a natureza ao longo do tempo forma o:", a: "Espaço geográfico", err: ["Núcleo terrestre", "Manto magmático", "Eixo polar"] },
+      { q: "Um espaço delimitado por fronteiras onde existe uma relação de poder (como um país ou município) chama-se:", a: "Território", err: ["Paralelo", "Bioma", "Aquífero"] },
+
+      // --- ORIENTAÇÃO E LOCALIZAÇÃO ---
+      { q: "Na Rosa dos Ventos, quais são os quatro pontos cardeais?", a: "Norte, Sul, Leste e Oeste", err: ["Nordeste, Sudeste, Noroeste e Sudoeste", "Cima, Baixo, Direita e Esquerda", "Sol, Lua, Terra e Mar"] },
+      { q: "Quais são os quatro pontos colaterais da Rosa dos Ventos?", a: "Nordeste, Sudeste, Noroeste e Sudoeste", err: ["Norte, Sul, Leste e Oeste", "Equador, Greenwich, Trópico e Polo", "Alto, Baixo, Frente e Verso"] },
+      { q: "Tomando o Sol como referência pela manhã, em qual ponto cardeal ele nasce aproximadamente?", a: "Leste (Oriente)", err: ["Oeste (Ocidente)", "Norte", "Sul"] },
+      { q: "No fim da tarde, em qual ponto cardeal o Sol se põe aproximadamente?", a: "Oeste (Ocidente)", err: ["Leste (Oriente)", "Norte", "Sul"] },
+      { q: "Qual instrumento de orientação aponta para o Norte magnético usando uma agulha imantada?", a: "Bússola", err: ["Termômetro", "Barômetro", "Pluviômetro"] },
+      { q: "Qual sistema moderno utiliza sinais de satélites para indicar a localização exata na Terra?", a: "GPS", err: ["Anemômetro", "Sismógrafo", "Higrômetro"] },
+
+      // --- COORDENADAS GEOGRÁFICAS E CARTOGRAFIA ---
+      { q: "Qual linha imaginária divide a Terra em Hemisfério Norte e Hemisfério Sul?", a: "Linha do Equador", err: ["Meridiano de Greenwich", "Trópico de Capricórnio", "Círculo Polar Antártico"] },
+      { q: "Qual linha imaginária divide a Terra nos Hemisférios Ocidental e Oriental?", a: "Meridiano de Greenwich", err: ["Linha do Equador", "Trópico de Câncer", "Círculo Polar Ártico"] },
+      { q: "As linhas imaginárias horizontais paralelas à Linha do Equador medem a:", a: "Latitude", err: ["Longitude", "Altitude", "Pressão"] },
+      { q: "Os semicírculos verticais que vão de um polo ao outro e medem a longitude são os:", a: "Meridianos", err: ["Paralelos", "Trópicos", "Equinócios"] },
+      { q: "Em um mapa, o que a escala cartográfica informa?", a: "A proporção entre o tamanho no mapa e o tamanho real", err: ["A direção do vento", "A idade das montanhas", "O clima da região"] },
+      { q: "Em um mapa, qual elemento explica o significado das cores, símbolos e linhas usados?", a: "Legenda", err: ["Título", "Escala", "Fonte"] },
+      { q: "Qual tipo de mapa representa principalmente as fronteiras entre países, estados e capitais?", a: "Mapa político", err: ["Mapa físico", "Mapa climático", "Mapa hidrográfico"] },
+      { q: "Qual tipo de mapa destaca elementos naturais como rios, altitudes e formas de relevo?", a: "Mapa físico", err: ["Mapa político", "Mapa rodoviário", "Mapa eleitoral"] },
+      { q: "A divisão da Terra em 24 faixas de horários diferentes ao redor do globo chama-se:", a: "Fusos horários", err: ["Placas tectônicas", "Curvas de nível", "Bacias hidrográficas"] },
+
+      // --- MOVIMENTOS DA TERRA E CAMADAS ---
+      { q: "O movimento de rotação da Terra ao redor do seu próprio eixo provoca:", a: "A sucessão dos dias e das noites", err: ["As estações do ano", "As fases da Lua", "Os terremotos"] },
+      { q: "Qual movimento a Terra realiza ao redor do Sol, durando cerca de 365 dias e 6 horas?", a: "Translação", err: ["Rotação", "Erosão", "Sedimentação"] },
+      { q: "Por que existem as quatro estações do ano (primavera, verão, outono e inverno)?", a: "Pela translação combinada com a inclinação do eixo terrestre", err: ["Porque a Lua gira em torno do Sol", "Pelo movimento das placas tectônicas", "Pela rotação dos oceanos"] },
+      { q: "Qual é a camada mais externa e sólida da Terra, onde vivemos?", a: "Crosta terrestre (ou Litosfera)", err: ["Manto", "Núcleo interno", "Núcleo externo"] },
+      { q: "Qual camada interna da Terra fica entre a crosta e o núcleo e possui rocha derretida (magma)?", a: "Manto", err: ["Troposfera", "Hidrosfera", "Crosta oceânica"] },
+      { q: "Qual é a camada mais interna e mais quente da Terra, composta principalmente de ferro e níquel?", a: "Núcleo", err: ["Crosta", "Estratosfera", "Biosfera"] },
+      { q: "O encontro e o atrito entre as placas tectônicas podem causar:", a: "Terremotos, vulcões e formação de montanhas", err: ["Chuva ácida e neblina", "Fases da Lua", "Formação de aquíferos"] },
+
+      // --- RELEVO, ROCHAS E SOLOS ---
+      { q: "Qual forma de relevo é caracterizada por terrenos elevados e relativamente planos no topo, onde predomina a erosão?", a: "Planalto", err: ["Planície", "Depressão absoluta", "Fossa oceânica"] },
+      { q: "Qual forma de relevo é plana, geralmente baixa, e recebe grande acúmulo de sedimentos trazidos por rios ou mares?", a: "Planície", err: ["Planalto", "Cordilheira", "Vulcão"] },
+      { q: "Em qual cordilheira da América do Sul fica a nascente do Rio Amazonas?", a: "Cordilheira dos Andes", err: ["Montanhas Rochosas", "Cordilheira do Himalaia", "Alpes Suíços"] },
+      { q: "Como se chama o processo de desgaste e transporte do solo pela água das chuvas, dos rios ou pelo vento?", a: "Erosão", err: ["Fotossíntese", "Condensação", "Urbanização"] },
+      { q: "O processo natural de desgaste e fragmentação das rochas ao longo do tempo para formar o solo é o:", a: "Intemperismo", err: ["Vulcanismo", "Tectonismo", "Magnetismo"] },
+      { q: "Rochas formadas pelo resfriamento e solidificação do magma são chamadas de:", a: "Rochas magmáticas (ou ígneas)", err: ["Rochas sedimentares", "Rochas calcárias", "Rochas orgânicas"] },
+      { q: "Rochas formadas pelo acúmulo e compactação de areia, argila e restos de seres vivos em camadas são:", a: "Rochas sedimentares", err: ["Rochas magmáticas", "Rochas vulcânicas", "Basalto puro"] },
+      { q: "Qual técnica agrícola consiste em plantar seguindo o formato do terreno para evitar a erosão nas encostas?", a: "Plantio em curvas de nível", err: ["Queimada controlada", "Desmatamento total", "Mineração a céu aberto"] },
+
+      // --- ATMOSFERA, TEMPO E CLIMA ---
+      { q: "Em qual camada da atmosfera acontecem as chuvas, os ventos e as nuvens?", a: "Troposfera", err: ["Estratosfera", "Mesosfera", "Exosfera"] },
+      { q: "Em qual camada da atmosfera fica a Camada de Ozônio, que protege a Terra dos raios ultravioleta?", a: "Estratosfera", err: ["Troposfera", "Crosta", "Hidrosfera"] },
+      { q: "Qual é a diferença entre tempo atmosférico e clima?", a: "O tempo muda rapidamente no dia a dia; o clima é o comportamento padrão observado por muitos anos", err: ["Tempo e clima são sempre a mesma coisa", "O clima muda a cada hora e o tempo dura séculos", "O tempo só existe nas montanhas"] },
+      { q: "Qual instrumento meteorológico mede a temperatura do ar?", a: "Termômetro", err: ["Pluviômetro", "Anemômetro", "Biruta"] },
+      { q: "Qual instrumento mede a quantidade de chuva que cai em um determinado local?", a: "Pluviômetro", err: ["Barômetro", "Termômetro", "Bússola"] },
+      { q: "Por que cidades no topo de serras altas costumam ser mais frias do que cidades na mesma latitude ao nível do mar?", a: "Por causa da maior altitude", err: ["Por causa da menor longitude", "Porque ficam perto do Equador", "Por causa dos fusos horários"] },
+      { q: "Qual clima predomina na região da Floresta Amazônica, sendo quente e muito chuvoso o ano todo?", a: "Clima Equatorial", err: ["Clima Polar", "Clima Desértico", "Clima Subtropical"] },
+      { q: "Qual clima predomina no interior do Nordeste brasileiro, marcado por chuvas escassas e longos períodos secos?", a: "Clima Semiárido", err: ["Clima Equatorial", "Clima Temperado", "Clima Alpino"] },
+
+      // --- HIDROSFERA E CICLO DA ÁGUA ---
+      { q: "Qual é o nome do conjunto de todas as águas do planeta (oceanos, rios, lagos, geleiras e águas subterrâneas)?", a: "Hidrosfera", err: ["Litosfera", "Atmosfera", "Biosfera"] },
+      { q: "No ciclo da água, a passagem da água líquida dos rios e mares para o estado de vapor chama-se:", a: "Evaporação", err: ["Precipitação", "Infiltração", "Solidificação"] },
+      { q: "No ciclo da água, a transformação do vapor de água em pequenas gotículas que formam as nuvens é a:", a: "Condensação", err: ["Evaporação", "Erosão", "Sublimação"] },
+      { q: "No ciclo da água, a queda da água das nuvens na forma de chuva, granizo ou neve é a:", a: "Precipitação", err: ["Evaporação", "Condensação", "Transpiração"] },
+      { q: "Qual é o maior oceano do planeta Terra em área e profundidade?", a: "Oceano Pacífico", err: ["Oceano Atlântico", "Oceano Índico", "Oceano Glacial Ártico"] },
+      { q: "Qual oceano banha todo o litoral brasileiro?", a: "Oceano Atlântico", err: ["Oceano Pacífico", "Oceano Índico", "Oceano Ártico"] },
+      { q: "Qual é o maior rio do planeta Terra em volume de água?", a: "Rio Amazonas", err: ["Rio Nilo", "Rio Paraná", "Rio São Francisco"] },
+      { q: "Qual famoso rio brasileiro nasce em Minas Gerais, atravessa o semiárido nordestino e é chamado de 'Velho Chico'?", a: "Rio São Francisco", err: ["Rio Tietê", "Rio Madeira", "Rio Uruguai"] },
+      { q: "Qual imenso reservatório de água subterrânea estende-se pelo Brasil, Paraguai, Uruguai e Argentina?", a: "Aquífero Guarani", err: ["Aquífero do Saara", "Mar Morto", "Delta do Nilo"] },
+      { q: "Como se chama o local onde um rio nasce?", a: "Nascente", err: ["Foz", "Afluente", "Meandro"] },
+      { q: "Como se chama o local onde um rio deságua em outro rio, lago ou no oceano?", a: "Foz", err: ["Nascente", "Divisor de águas", "Vale"] },
+
+      // --- BIOMAS BRASILEIROS E MUNDIAIS ---
+      { q: "Qual bioma exclusivamente brasileiro tem clima semiárido e plantas adaptadas à seca, como o mandacaru?", a: "Caatinga", err: ["Pampa", "Pantanal", "Floresta Amazônica"] },
+      { q: "Qual bioma é conhecido como a 'caixa d’água do Brasil' por abrigar nascentes de importantes bacias hidrográficas?", a: "Cerrado", err: ["Caatinga", "Pampa", "Tundra"] },
+      { q: "Qual bioma brasileiro é considerado a maior planície alagável do planeta?", a: "Pantanal", err: ["Caatinga", "Pampa", "Cerrado"] },
+      { q: "Qual bioma brasileiro predominava no litoral do país e hoje está muito reduzido pela urbanização e desmatamento?", a: "Mata Atlântica", err: ["Tundra", "Deserto", "Taiga"] },
+      { q: "Qual bioma brasileiro é formado por campos naturais no extremo sul do país (Rio Grande do Sul)?", a: "Pampa", err: ["Caatinga", "Floresta Amazônica", "Pantanal"] },
+      { q: "Qual é o menor continente do mundo em extensão territorial?", a: "Oceania", err: ["Europa", "América do Sul", "Antártida"] },
+      { q: "Qual bioma de regiões muito frias próximas aos polos possui vegetação rasteira de musgos e líquens?", a: "Tundra", err: ["Savana", "Caatinga", "Floresta Equatorial"] },
+      { q: "Qual é o maior deserto quente do mundo, localizado no norte da África?", a: "Deserto do Saara", err: ["Deserto do Atacama", "Deserto da Patagônia", "Deserto de Mojave"] },
+
+      // --- DESMATAMENTO E QUEIMADAS ---
+      { q: "Qual é uma das consequências diretas do desmatamento nas encostas e margens dos rios?", a: "Aumento da erosão e assoreamento dos rios", err: ["Aumento da biodiversidade local", "Resfriamento imediato do planeta", "Multiplicação das nascentes"] },
+      { q: "Qual é a importância da mata ciliar (vegetação às margens dos rios e lagos)?", a: "Proteger o solo contra erosão e evitar que terra e sujeira entupam os rios", err: ["Impedir a evaporação dos oceanos", "Produzir petróleo subterrâneo", "Criar terremotos naturais"] },
+      { q: "O processo de retirada da cobertura vegetal que deixa o solo pobre e seco em regiões semiáridas pode causar:", a: "Desertificação", err: ["Glaciação", "Maritimidade", "Sublimação"] },
+      { q: "Além de destruir habitats de animais, as queimadas florestais agravam o aquecimento global porque:", a: "Liberam grande quantidade de gás carbônico (CO₂) na atmosfera", err: ["Aumentam a camada de ozônio", "Transformam plástico em água pura", "Resfriam os oceanos"] },
+      { q: "Quando a terra levada pela chuva se acumula no fundo de um rio, deixando-o mais raso, ocorre o:", a: "Assoreamento", err: ["Desenvolvimento sustentável", "Vulcanismo", "Reflorestamento"] },
+      { q: "Qual medida ajuda diretamente a recuperar áreas que sofreram desmatamento?", a: "Reflorestamento com espécies nativas", err: ["Uso de queimadas anuais", "Canalização com cimento", "Ampliação de lixões"] },
+
+      // --- SUSTENTABILIDADE, ENERGIA E MEIO AMBIENTE ---
+      { q: "O que significa desenvolvimento sustentável?", a: "Atender às necessidades do presente sem comprometer os recursos das futuras gerações", err: ["Usar todos os recursos naturais o mais rápido possível", "Proibir qualquer atividade agrícola no país", "Substituir todas as florestas por cidades"] },
+      { q: "Quais são os 3 Rs clássicos da sustentabilidade para lidar com o consumo e o lixo?", a: "Reduzir, Reutilizar e Reciclar", err: ["Retirar, Romper e Rejeitar", "Queimar, Enterrar e Esquecer", "Comprar, Gastar e Descartar"] },
+      { q: "Na coleta seletiva de lixo, qual cor de lixeira é usada para descartar PAPEL e papelão?", a: "Azul", err: ["Verde", "Vermelha", "Amarela"] },
+      { q: "Na coleta seletiva, qual cor de lixeira é usada para descartar PLÁSTICO?", a: "Vermelha", err: ["Azul", "Marrom", "Preta"] },
+      { q: "Na coleta seletiva, qual cor de lixeira é destinada ao VIDRO?", a: "Verde", err: ["Amarela", "Azul", "Vermelha"] },
+      { q: "Na coleta seletiva, qual cor de lixeira é usada para o descarte de METAL?", a: "Amarela", err: ["Verde", "Azul", "Marrom"] },
+      { q: "Quais exemplos abaixo são fontes de energia renováveis e limpas?", a: "Energia solar e energia eólica (dos ventos)", err: ["Petróleo e carvão mineral", "Gás natural e diesel", "Gasolina e carvão"] },
+      { q: "Qual recurso energético é um combustível fóssil NÃO renovável muito usado para fabricar gasolina e plástico?", a: "Petróleo", err: ["Energia solar", "Energia eólica", "Energia das marés"] },
+      { q: "A técnica sustentável que transforma restos de alimentos e folhas em adubo natural chama-se:", a: "Compostagem", err: ["Desmatamento", "Assoreamento", "Incineração tóxica"] },
+      { q: "O aumento exagerado da temperatura média da Terra por causa da poluição e do desmatamento é o:", a: "Aquecimento global", err: ["Movimento de rotação", "Ciclo das marés", "Equinócio de outono"] },
+      { q: "Nos grandes centros urbanos, o fenômeno em que o centro asfaltado fica bem mais quente que áreas arborizadas chama-se:", a: "Ilha de calor", err: ["Aquífero urbano", "Frente polar", "Erosão marinha"] },
+
+      // --- ECONOMIA, CAMPO E CIDADE ---
       { q: "Qual setor da economia envolve a agricultura, a pecuária e o extrativismo?", a: "Setor Primário", err: ["Setor Secundário", "Setor Terciário", "Setor Digital"] },
-      { q: "Qual setor da economia transforma matérias-primas em produtos na indústria?", a: "Setor Secundário", err: ["Setor Primário", "Setor Terciário", "Setor Agrícola"] },
-      { q: "Qual setor da economia abrange o comércio, escolas, hospitais e prestação de serviços?", a: "Setor Terciário", err: ["Setor Primário", "Setor Secundário", "Setor Extrativista"] },
-      { q: "Como é chamado o deslocamento de pessoas que saem do campo para morar nas cidades?", a: "Êxodo rural", err: ["Êxodo urbano", "Rotação", "Sedentarismo"] },
-      { q: "O processo de crescimento das cidades e aumento da população urbana é chamado de:", a: "Urbanização", err: ["Desertificação", "Glaciação", "Reflorestamento"] },
-      { q: "Em qual subcontinente das Américas o Brasil está localizado?", a: "América do Sul", err: ["América do Norte", "América Central", "Europa Ocidental"] },
-      { q: "Qual oceano banha todo o litoral leste do Brasil?", a: "Oceano Atlântico", err: ["Oceano Pacífico", "Oceano Índico", "Oceano Ártico"] },
-      { q: "Qual é o nome do conjunto de todas as águas do planeta (oceanos, rios, lagos e geleiras)?", a: "Hidrosfera", err: ["Atmosfera", "Litosfera", "Biosfera"] }
+      { q: "Qual setor da economia transforma matérias-primas em produtos industrializados nas fábricas?", a: "Setor Secundário", err: ["Setor Primário", "Setor Terciário", "Setor Extrativista"] },
+      { q: "Qual setor da economia engloba comércio, escolas, hospitais, transporte e prestação de serviços?", a: "Setor Terciário", err: ["Setor Primário", "Setor Secundário", "Setor Agrário"] },
+      { q: "Como se chama a migração de pessoas que saem da zona rural (campo) para morar nas cidades?", a: "Êxodo rural", err: ["Êxodo urbano", "Urbanização inversa", "Translação"] },
+      { q: "O processo de crescimento das cidades e aumento da população vivendo em áreas urbanas é a:", a: "Urbanização", err: ["Desertificação", "Reflorestamento", "Glaciação"] },
+
+      // --- ESTADOS, CAPITAIS E REGIÕES DO BRASIL ---
+      { q: "Qual é a capital do Brasil, localizada no Distrito Federal?", a: "Brasília", err: ["Rio de Janeiro", "São Paulo", "Goiânia"] },
+      { q: "Quantas regiões oficiais dividem o território brasileiro segundo o IBGE?", a: "5 regiões (Norte, Nordeste, Centro-Oeste, Sudeste e Sul)", err: ["3 regiões", "7 regiões", "4 regiões"] },
+      { q: "Qual é a capital do estado do Amazonas?", a: "Manaus", err: ["Belém", "Porto Velho", "Rio Branco"] },
+      { q: "Qual é a capital do estado do Pará?", a: "Belém", err: ["Manaus", "Macapá", "Palmas"] },
+      { q: "Qual é a capital do estado do Acre?", a: "Rio Branco", err: ["Boa Vista", "Porto Velho", "Manaus"] },
+      { q: "Qual é a capital do estado de Roraima?", a: "Boa Vista", err: ["Macapá", "Palmas", "Rio Branco"] },
+      { q: "Qual é a capital do estado do Tocantins?", a: "Palmas", err: ["Goiânia", "Cuiabá", "Teresina"] },
+      { q: "Qual é a capital do estado da Bahia?", a: "Salvador", err: ["Recife", "Fortaleza", "Aracaju"] },
+      { q: "Qual é a capital do estado de Pernambuco?", a: "Recife", err: ["Salvador", "Maceió", "Natal"] },
+      { q: "Qual é a capital do estado do Ceará?", a: "Fortaleza", err: ["São Luís", "Teresina", "João Pessoa"] },
+      { q: "Qual é a capital do estado do Maranhão?", a: "São Luís", err: ["Fortaleza", "Teresina", "Belém"] },
+      { q: "Qual é a capital do estado do Piauí?", a: "Teresina", err: ["São Luís", "Natal", "Aracaju"] },
+      { q: "Qual é a capital do estado do Rio Grande do Norte?", a: "Natal", err: ["João Pessoa", "Maceió", "Recife"] },
+      { q: "Qual é a capital do estado da Paraíba?", a: "João Pessoa", err: ["Natal", "Aracaju", "Maceió"] },
+      { q: "Qual é a capital do estado de Alagoas?", a: "Maceió", err: ["Aracaju", "Salvador", "João Pessoa"] },
+      { q: "Qual é a capital do estado de Sergipe?", a: "Aracaju", err: ["Maceió", "Recife", "Salvador"] },
+      { q: "Qual é a capital do estado de Goiás?", a: "Goiânia", err: ["Cuiabá", "Campo Grande", "Brasília"] },
+      { q: "Qual é a capital do estado de Mato Grosso?", a: "Cuiabá", err: ["Campo Grande", "Goiânia", "Palmas"] },
+      { q: "Qual é a capital do estado de Mato Grosso do Sul?", a: "Campo Grande", err: ["Cuiabá", "Goiânia", "Curitiba"] },
+      { q: "Qual é a capital do estado de Minas Gerais?", a: "Belo Horizonte", err: ["Vitória", "São Paulo", "Goiânia"] },
+      { q: "Qual é a capital do estado do Espírito Santo?", a: "Vitória", err: ["Belo Horizonte", "Niterói", "Rio de Janeiro"] },
+      { q: "Qual é a capital do estado do Paraná?", a: "Curitiba", err: ["Florianópolis", "Porto Alegre", "Londrina"] },
+      { q: "Qual é a capital do estado de Santa Catarina?", a: "Florianópolis", err: ["Curitiba", "Porto Alegre", "Joinville"] },
+      { q: "Qual é a capital do estado do Rio Grande do Sul?", a: "Porto Alegre", err: ["Florianópolis", "Curitiba", "Pelotas"] }
     ];
     this.deck = [];
     this.refillDeck();
@@ -739,37 +837,37 @@ class GeographyQuestionBank {
 
 class HeartMessageBank {
   constructor() {
-    this.aberturas = [
-      "Querida Professora Dilma,",
-      "Para a professora mais especial:",
-      "Com imenso carinho da Turma do 6º B:",
-      "Professora Dilma, nossa eterna inspiração:",
-      "Com todo carinho e gratidão:"
+    this.messages = [
+      "Gostar de Geografia ❌  |  Gostar da Professora Dilma ✅💚",
+      "Temos muito orgulho de ter você como nossa professora, Dilma! 🌟💛",
+      "Acordar cedo ❌  |  Ter aula com a Professora Dilma ✅🔥",
+      "Melhor professora da escola? A resposta já está marcada: Professora Dilma! ✅🏆",
+      "Decorar todos os mapas ❌  |  Ter orgulho de ser aluno da Professora Dilma ✅💚",
+      "Fazer prova surpresa ❌  |  Dar risada e aprender com a Professora Dilma ✅😄",
+      "Entender fuso horário de primeira ❌  |  Admirar muito a Professora Dilma ✅⭐",
+      "Professora Dilma, suas aulas são nota 1000! Aqui no Grupo do Rafael somos seus fãs! 💛👏",
+      "Geografia sem sono? Só nas aulas da Professora Dilma! Temos orgulho de ter você como prof! 💚✨",
+      "Copiar texto enorme ❌  |  Ter a Professora Dilma na nossa sala ✅🎉",
+      "A matéria pode até ser grande, mas com a Professora Dilma tudo fica muito mais legal! 🌟💚",
+      "Grupo do Rafael confirma: orgulho gigante de ter a Professora Dilma ensinando a gente! 💛🏆"
     ];
-    this.meios = [
-      "suas aulas abrem nossos horizontes para o mundo",
-      "sua dedicação e paciência tornam o nosso ano letivo incrível",
-      "cada mapa estudado ganha vida com o seu amor por ensinar",
-      "seus ensinamentos e conselhos fazem diferença na nossa vida",
-      "sua alegria contagiante deixa os nossos dias na escola muito mais leves"
-    ];
-    this.fechamentos = [
-      "muito obrigado por acreditar em cada um de nós! ❤️",
-      "a gente te ama muito e é muito grato por ter você como professora! 🌟",
-      "você faz parte da história linda da nossa turma! 👏",
-      "o 6º B tem um orgulho imenso de ser seus alunos! ✨"
-    ];
+    this.deck = [];
   }
+
   getFiveMessages() {
-    const msgs = [];
-    const offset = Math.floor(Math.random() * 100);
-    for (let i = 0; i < 5; i++) {
-      const a = this.aberturas[(i + offset) % this.aberturas.length];
-      const m = this.meios[(i * 2 + offset) % this.meios.length];
-      const f = this.fechamentos[(i * 3 + offset) % this.fechamentos.length];
-      msgs.push(`${a} ${m}... ${f}`);
+    if (this.deck.length < 5) {
+      const indices = this.messages.map((_, i) => i);
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+      }
+      this.deck = indices;
     }
-    return msgs;
+    const picked = [];
+    for (let i = 0; i < 5; i++) {
+      picked.push(this.messages[this.deck.shift()]);
+    }
+    return picked;
   }
 }
 
@@ -952,11 +1050,13 @@ const player = {
     ctx.lineTo(22, 92);
     ctx.fill();
 
-    ctx.fillStyle = "#ffd152";
+    // Camisa branca limpa por dentro do blazer (sem seta/triângulo amarelo)
+    ctx.fillStyle = "#f1f2f6";
     ctx.beginPath();
-    ctx.moveTo(-12, 52);
-    ctx.lineTo(12, 52);
-    ctx.lineTo(0, 70);
+    ctx.moveTo(-10, 52);
+    ctx.lineTo(10, 52);
+    ctx.lineTo(0, 74);
+    ctx.closePath();
     ctx.fill();
 
     ctx.fillStyle = "#2f3542";
@@ -977,12 +1077,6 @@ const player = {
 
     if (hasPhoto) {
       ctx.drawImage(av, -52, -32, 104, 100);
-      ctx.fillStyle = "#ffd152";
-      ctx.beginPath();
-      ctx.moveTo(-12, 52);
-      ctx.lineTo(12, 52);
-      ctx.lineTo(0, 62);
-      ctx.fill();
     } else {
       ctx.fillStyle = "#4a2810";
       ctx.beginPath();
@@ -1038,7 +1132,7 @@ const player = {
 };
 
 // ==========================================
-// 5. BORBOLETAS REAIS
+// 5. BORBOLETAS LEVES (APENAS DECORAÇÃO SUAVE)
 // ==========================================
 class RealisticButterfly {
   constructor(x, y, maxW) {
@@ -1047,63 +1141,65 @@ class RealisticButterfly {
     this.baseY = y;
     this.maxW = maxW || 4200;
     this.wingAngle = Math.random() * Math.PI;
-    this.flapSpeed = 0.18 + Math.random() * 0.08;
-    this.vx = (Math.random() - 0.5) * 2.4;
+    this.flapSpeed = 0.14 + Math.random() * 0.06;
+    this.vx = (Math.random() > 0.5 ? 1 : -1) * (1.1 + Math.random() * 0.7);
     this.time = Math.random() * 100;
   }
   update() {
-    this.time += 0.03;
+    this.time += 0.025;
     this.wingAngle += this.flapSpeed;
     this.x += this.vx;
-    this.y = this.baseY + Math.sin(this.time) * 44;
+    this.y = this.baseY + Math.sin(this.time) * 28;
 
-    if (this.x < 200) this.vx = Math.abs(this.vx);
+    if (this.x < 220) this.vx = Math.abs(this.vx);
     if (this.x > this.maxW) this.vx = -Math.abs(this.vx);
   }
   draw() {
     ctx.save();
     ctx.translate(this.x, this.y);
+    ctx.scale(0.68, 0.68);
+    ctx.globalAlpha = 0.85;
 
     const flap = Math.cos(this.wingAngle);
-    const wingWidth = 28 * Math.abs(flap);
+    const wingWidth = 26 * Math.abs(flap);
 
     ctx.save();
     ctx.scale(flap < 0 ? -1 : 1, 1);
 
     ctx.fillStyle = "#ff6b81";
     ctx.beginPath();
-    ctx.ellipse(-16, -16, wingWidth, 20, -0.4, 0, Math.PI * 2);
+    ctx.ellipse(-15, -15, wingWidth, 18, -0.4, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = "#ffd152";
     ctx.beginPath();
-    ctx.ellipse(-14, -15, wingWidth * 0.55, 11, -0.4, 0, Math.PI * 2);
+    ctx.ellipse(-13, -14, wingWidth * 0.52, 10, -0.4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = "#ff7f50";
     ctx.beginPath();
-    ctx.ellipse(-12, 8, wingWidth * 0.8, 14, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(-11, 8, wingWidth * 0.78, 13, 0.4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.scale(-1, 1);
     ctx.fillStyle = "#ff6b81";
     ctx.beginPath();
-    ctx.ellipse(-16, -16, wingWidth, 20, -0.4, 0, Math.PI * 2);
+    ctx.ellipse(-15, -15, wingWidth, 18, -0.4, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = "#ffd152";
     ctx.beginPath();
-    ctx.ellipse(-14, -15, wingWidth * 0.55, 11, -0.4, 0, Math.PI * 2);
+    ctx.ellipse(-13, -14, wingWidth * 0.52, 10, -0.4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.fillStyle = "#ff7f50";
     ctx.beginPath();
-    ctx.ellipse(-12, 8, wingWidth * 0.8, 14, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(-11, 8, wingWidth * 0.78, 13, 0.4, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
 
     ctx.fillStyle = "#1e272e";
     ctx.beginPath();
-    ctx.ellipse(0, 0, 4.4, 16, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, 0, 4, 14, 0, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -1160,7 +1256,7 @@ class MagicPortal {
 }
 
 // ==========================================
-// 7. CHEFÃO: O DEVORADOR DAS SOMBRAS (EQUILIBRADO E JUSTO)
+// 7. CHEFÃO: O DEVORADOR DAS SOMBRAS
 // ==========================================
 class ShadowBoss {
   constructor() {
@@ -2350,11 +2446,9 @@ const VFX = (() => {
 
   return { scene, platform, postFX, itemGlow, playerFX, iris, drawGlow, resetCaches };
 })();
-// ===== FIM DA PARTE 1 (COLE A PARTE 2 LOGO ABAIXO DESTA LINHA) =====// ==============================================================
-// 10. CONSTRUÇÃO PROCEDURAL DAS 5 FASES (CHÃO NORMAL + BURACOS LEVES + PARKOUR ALEATÓRIO)
+
 // ==============================================================
-// ==============================================================
-// 10. CONSTRUÇÃO PROCEDURAL DAS 5 FASES (CHÃO NORMAL + BURACOS LEVES + PULOS FÁCEIS)
+// 10. CONSTRUÇÃO PROCEDURAL DAS 5 FASES
 // ==============================================================
 class LevelBuilder {
   static rand(min, max) {
@@ -2411,13 +2505,14 @@ class LevelBuilder {
 
       player.reset(160, 720);
 
+      // Apenas 2 borboletas discretas no alto da Fase 1
       if (phaseNum === 1) {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 2; i++) {
           GAME_STATE.ambientEntities.push(
             new RealisticButterfly(
-              this.rand(350, totalWidth - 300),
-              this.rand(340, 680),
-              totalWidth - 200
+              this.rand(500 + i * 1600, 1400 + i * 1600),
+              this.rand(190, 340),
+              totalWidth - 240
             )
           );
         }
@@ -2805,7 +2900,7 @@ function closeCredits() {
 function openHeartMessage(msg) {
   GAME_STATE.paused = true;
   heartModalOpenTime = performance.now();
-  heartModalBody.textContent = `"${msg}"`;
+  heartModalBody.textContent = msg;
   heartModal.style.display = 'flex';
 }
 
@@ -2950,7 +3045,7 @@ document.getElementById('btn-back-title').onclick = () => {
 };
 
 // ==========================================
-// 12. QUIZ MODAL (SEM REVELAR RESPOSTA NO ERRO)
+// 12. QUIZ MODAL (PERMANECE NA TELA AO ERRAR!)
 // ==========================================
 const quizModal = document.getElementById('quiz-modal');
 const quizTitle = document.getElementById('quiz-title');
@@ -2978,10 +3073,9 @@ function openGeographyQuestion(item) {
 }
 
 function handleAnswer(selected, correct, btn) {
-  const allBtns = quizOptions.querySelectorAll('.opt-btn');
-  allBtns.forEach(b => b.disabled = true);
-
   if (selected === correct) {
+    const allBtns = quizOptions.querySelectorAll('.opt-btn');
+    allBtns.forEach(b => b.disabled = true);
     btn.classList.add('correct');
     quizFeedback.style.color = '#2ed573';
     quizFeedback.textContent = '🌟 CORRETO! Resposta brilhante!';
@@ -2999,21 +3093,13 @@ function handleAnswer(selected, correct, btn) {
       if (GAME_STATE.objectiveCount >= 5 && !GAME_STATE.portal) {
         spawnPortal();
       }
-    }, 850);
+    }, 800);
   } else {
     btn.classList.add('wrong');
-    quizFeedback.style.color = '#ff4757';
-    quizFeedback.textContent = '❌ Ops! Resposta incorreta. Tente novamente!';
+    btn.disabled = true;
+    quizFeedback.style.color = '#ff6b81';
+    quizFeedback.textContent = '❌ Ops! Essa não é a certa. Tente outra alternativa aqui mesmo!';
     sfx.playWrong();
-
-    currentActiveItem.questionData.options.sort(() => 0.5 - Math.random());
-
-    setTimeout(() => {
-      quizModal.style.display = 'none';
-      GAME_STATE.paused = false;
-      player.vy = -12;
-      player.x = Math.max(0, player.x - 55);
-    }, 1000);
   }
 }
 
@@ -3304,7 +3390,7 @@ function triggerVictory() {
 
   document.getElementById('stat-journeys').textContent = currentJourney;
   document.getElementById('stat-score').textContent = GAME_STATE.score;
-  document.getElementById('victory-screen').style.display = 'flex';
+  victoryScreen.style.display = 'flex';
 }
 
 function checkOverlap(r1, r2) {
@@ -3479,81 +3565,9 @@ function draw() {
       ctx.fillStyle = "#ffd152";
       ctx.font = "bold 56px Fredoka";
       ctx.textAlign = "center";
-      ctx.fillText(GAME_STATE.transitionBanner, LOGICAL_W / 2, LOGICAL_H / 2 - 20);
+      ctx.fillText(GAME_STATE.transitionBanner, LOGICAL_W / 2
+Model 14:53
+ThinkingThoughts
+Expand to view model thoughts
 
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "28px Fredoka";
-      ctx.fillText("Gerando novo parkour...", LOGICAL_W / 2, LOGICAL_H / 2 + 40);
-    }
-  }
-}
-
-let loopStarted = false;
-let lastFrameTime = 0;
-let accumulator = 0;
-const FIXED_STEP = 1000 / 60;
-
-document.addEventListener('visibilitychange', () => {
-  if (!document.hidden) {
-    lastFrameTime = performance.now();
-    accumulator = 0;
-  }
-});
-
-function gameLoop(timestamp) {
-  if (!lastFrameTime) lastFrameTime = timestamp;
-  const delta = Math.min(100, Math.max(0, timestamp - lastFrameTime));
-  lastFrameTime = timestamp;
-
-  accumulator += delta;
-  let steps = 0;
-  while (accumulator >= FIXED_STEP && steps < 4) {
-    update();
-    accumulator -= FIXED_STEP;
-    steps++;
-  }
-  if (steps >= 4) accumulator = 0;
-
-  draw();
-  requestAnimationFrame(gameLoop);
-}
-
-// ==========================================
-// 15. INICIALIZAÇÃO
-// ==========================================
-document.getElementById('btn-start').onclick = () => {
-  sfx.init();
-  startScreen.style.display = 'none';
-  GAME_STATE.paused = false;
-  GAME_STATE.won = false;
-  GAME_STATE.over = false;
-  GAME_STATE.transitioning = false;
-  GAME_STATE.transitionAlpha = 0;
-  GAME_STATE.lives = 5;
-  GAME_STATE.score = 0;
-  LevelBuilder.setupPhase(1);
-  if (!loopStarted) {
-    loopStarted = true;
-    lastFrameTime = performance.now();
-    requestAnimationFrame(gameLoop);
-  }
-};
-
-document.getElementById('btn-restart').onclick = () => {
-  victoryScreen.style.display = 'none';
-  GAME_STATE.won = false;
-  GAME_STATE.paused = false;
-  GAME_STATE.transitioning = false;
-  GAME_STATE.transitionAlpha = 0;
-  GAME_STATE.lives = 5;
-  GAME_STATE.score = 0;
-  LevelBuilder.setupPhase(1);
-};
-
-document.getElementById('btn-sound').onclick = (e) => {
-  sfx.enabled = !sfx.enabled;
-  e.target.textContent = sfx.enabled ? "🔊" : "🔇";
-};
-</script>
-</body>
-</html>
+```html
